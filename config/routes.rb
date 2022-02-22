@@ -6,4 +6,7 @@ Rails.application.routes.draw do
   get 'log_out', to: 'sessions#destroy', as: 'log_out'
 
   resources :sessions, only: %i[create destroy]
+
+  get 'map/top', to: 'map#show'
+
 end
