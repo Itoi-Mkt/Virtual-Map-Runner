@@ -1,25 +1,126 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>VirtualMapWalker</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<!doctype html>
+<html lang="ja">
+<head><%= csrf_meta_tags %></head>
+<body>
+<script src="https://apis.google.com/js/client.js"></script>
+<script>
+const client_id = '<%= ENV['APLI_CLIANT_ID']%>'
+const scope = ['https://www.googleapis.com/auth/fitness.location.read']
+let access_token = '<%= ENV['APLI_ACCESS_TOKEN']%>'
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+// DBにPOSTするfetch用にCsrfTokenを取る
+    const getCsrfToken = () => {
+        const metas = document.getElementsByTagName('meta');
+        for (let meta of metas) {
+            if (meta.getAttribute('name') === 'csrf-token') {
+                console.log('csrf-token:', meta.getAttribute('content'));
+                return meta.getAttribute('content');
+            }
+        }
+        return '';
+    }
 
-    <% if current_user %>
-      <%= image_tag current_user.image %>
-      <%= current_user.name %>さん
-      <%= link_to "ログアウト", log_out_path %>
-    <% else  %>
-      ゲストさん
-      <%= link_to "Googleでログイン", "/auth/google_oauth2", method: :post %>
-    <% end %>
 
-  </head>
+// callbackを呼ぶ
+function getToken() {
+    gapi.auth.authorize({client_id: client_id, scope: scope, immediate: false, response_type: 'token'}, callback)
+}
 
-  <body>
-    <%= yield %>
-  </body>
+// getStepsを呼ぶ
+function callback(e) {
+    access_token = e.access_token
+    console.log(e)
+    fetch('https://www.googleapis.com/fitness/v1/users/me/dataSources?access_token=' + access_token)
+    
+    .then(response => {
+        return response.json()
+    })
+        
+    .then(json => {
+        console.log(json)
+        getSteps()
+    })
+
+    console.log("コールバック")
+    console.log(Date.now())
+
+}
+
+
+// 距離を得る & post_distancesを呼ぶ
+function getSteps() {
+    const start = new Date('2022/2/21 0:00:00').getTime()
+    const end = new Date('2022/2/22 0:00:00').getTime()
+    
+    console.log(new Date(start))
+    console.log("〜")
+    console.log(new Date(end))
+
+    
+
+    // Fit APIからデータを出すfetch
+    fetch('https://www.googleapis.com/fitness/v1/users/me/dataSources/derived:com.google.distance.delta:com.google.android.gms:merge_distance_delta/datasets/'+start.toString()+'000000'+'-'+end.toString()+'000000?access_token=' + access_token)
+    .then(response => {
+        return response.json()
+    })
+    .then(json => {
+        console.log(json)
+        console.log(json.point)
+        console.log(Object.keys(json.point[0]))
+
+        total = 0
+            
+        json.point.forEach(dis => {
+                
+            <%# console.log(dis.value[0].fpVal)
+            console.log(Date(dis.ActiveTimeMillis)) %>
+            total = total + dis.value[0].fpVal
+        })
+           
+        console.log(total)
+        console.log(new Date(start))
+        console.log(Date.now())
+    })
+
+    post_distances()
+    
+    
+
+}
+
+function post_distances(){
+// fetchでDBにPOST
+    //DBに送るデータの骨子
+    const post_data = {
+    key1: "data1",
+    key2: "data2",
+    key3: 3,
+    w_day: "2022-03-31",
+    w_dis: 333333.33
+    };
+
+
+    fetch('/distances', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': getCsrfToken()
+        },
+        body : JSON.stringify(post_data),
+    })
+    .then(function(response){
+      const response_message = response.status + ':' + response.statusText
+      console.log(response_message);
+    });
+
+
+}
+
+
+
+
+window.onload = getToken
+</script>
+</body>
 </html>

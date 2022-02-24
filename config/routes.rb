@@ -8,5 +8,5 @@ Rails.application.routes.draw do
   resources :sessions, only: %i[create destroy]
 
   get 'map/top', to: 'map#show'
-
+  post 'distances' => 'distances#create'
 end
