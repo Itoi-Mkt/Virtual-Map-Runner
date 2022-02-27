@@ -10,20 +10,16 @@ class DistancesController < ApplicationController
         
 
         pp "createだよー"
-        binding.pry
-        x = params.require(:key1)
-        pp "paramsは↓"
-        pp params
-        pp "xは↓"
-        pp x
+        #binding.pry
+        
         wday = params.require(:w_day)
         wdis = params.require(:w_dis)
-        @distance = Distance.new(
-            walking_day: wday,
-            walking_distance: wdis
-        )
-        @distance.save
-        binding.pry
+        # @distance = Distance.new(
+        #     walking_day: wday,
+        #     walking_distance: wdis
+        # )
+        #@distance.save
+        #binding.pry
         #ここから地図に入る？
         redirect_to root_path
     end

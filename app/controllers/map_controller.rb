@@ -1,5 +1,5 @@
 class MapController < ApplicationController
-    #skip_before_action :check_logged_in, only: :index
+    skip_before_action :check_logged_in , only: :show
     GOOGLE_API_KEY = ENV["API_KEY"]
     def show
         

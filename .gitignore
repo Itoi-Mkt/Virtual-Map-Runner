@@ -6,8 +6,8 @@
 
 
 .env
-
-
+index.html copy.erb
+application.html2.erb
 # Ignore bundler config.
 vendor/
 # Ignore all logfiles and tempfiles.

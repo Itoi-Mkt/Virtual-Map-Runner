@@ -102,9 +102,19 @@ GEM
     ffi (1.15.5)
     globalid (1.0.0)
       activesupport (>= 5.0)
+    gon (6.4.0)
+      actionpack (>= 3.0.20)
+      i18n (>= 0.7)
+      multi_json
+      request_store (>= 1.0)
     google-oauth2-installed (0.0.4)
       oauth2
+    google_maps_service (0.4.2)
+      hurley (~> 0.1)
+      multi_json (~> 1.11)
+      retriable (~> 2.0)
     hashie (5.0.0)
+    hurley (0.2)
     i18n (1.10.0)
       concurrent-ruby (~> 1.0)
     io-like (0.3.1)
@@ -199,9 +209,12 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     regexp_parser (2.2.1)
+    request_store (1.5.1)
+      rack (>= 1.4)
     responders (3.0.1)
       actionpack (>= 5.0)
       railties (>= 5.0)
+    retriable (2.1.0)
     rexml (3.2.5)
     ruby2_keywords (0.0.5)
     ruby_dep (1.5.0)
@@ -268,7 +281,9 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   devise
   dotenv-rails
+  gon
   google-oauth2-installed
+  google_maps_service
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)
   mysql2 (>= 0.4.4, < 0.6.0)
