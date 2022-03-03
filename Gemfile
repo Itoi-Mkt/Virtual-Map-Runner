@@ -13,6 +13,7 @@ gem 'omniauth-rails_csrf_protection'
 gem 'pry-rails'
 gem 'google_maps_service'
 gem 'gon'
+gem 'unicorn'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.6', '>= 5.2.6.2'
