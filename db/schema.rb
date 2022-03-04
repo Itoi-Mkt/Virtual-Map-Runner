@@ -12,14 +12,14 @@
 
 ActiveRecord::Schema.define(version: 2022_02_25_073223) do
 
-  create_table "distances", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
+  create_table "distances", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.date "walking_day"
     t.decimal "walking_distance", precision: 8, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "paths", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
+  create_table "paths", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "step_id"
     t.decimal "lat", precision: 20, scale: 17
     t.decimal "lng", precision: 20, scale: 17
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 2022_02_25_073223) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "routes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
+  create_table "routes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.binary "thumbnail"
     t.text "other"
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 2022_02_25_073223) do
     t.datetime "created_at"
   end
 
-  create_table "steps", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
+  create_table "steps", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "route_id"
     t.string "distance_text"
     t.integer "distance_value"
@@ -50,13 +50,13 @@ ActiveRecord::Schema.define(version: 2022_02_25_073223) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "tests", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
+  create_table "tests", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.string "image"
