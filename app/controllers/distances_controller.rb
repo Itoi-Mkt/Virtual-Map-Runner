@@ -24,10 +24,4 @@ class DistancesController < ApplicationController
         redirect_to root_path
     end
 
-    # private
-    #     def distance_params
-    #         params.require(:w_day)
-    #         params.require(:w_dis)
-    #     end
-
 end

@@ -11,7 +11,6 @@
 <script>
 const client_id = '<%= ENV['APLI_CLIANT_ID']%>'
 const scope = ['https://www.googleapis.com/auth/fitness.location.read']
-let access_token = '<%= ENV['APLI_ACCESS_TOKEN']%>'
 let total = 0
 let root_dis = 0
 var imap
@@ -22,7 +21,6 @@ const getCsrfToken = () => {
     const metas = document.getElementsByTagName('meta');
     for (let meta of metas) {
         if (meta.getAttribute('name') === 'csrf-token') {
-            // console.log('csrf-token:', meta.getAttribute('content'));
             return meta.getAttribute('content');
         }
     }
@@ -36,8 +34,8 @@ function getToken() {
 
 // getStepsを呼ぶ
 function callback(e) {
-    access_token = e.access_token
-    fetch('https://www.googleapis.com/fitness/v1/users/me/dataSources?access_token=' + access_token)
+    
+    fetch('https://www.googleapis.com/fitness/v1/users/me/dataSources?access_token=' + e.access_token)
     
     .then(response => {
         return response.json()
@@ -45,24 +43,15 @@ function callback(e) {
         
     .then(json => {
         console.log(json)
-        getSteps()
+        getSteps(e.access_token)
     })
-
-    // console.log("コールバック")
-    // console.log(Date.now())
 
 }
 
 // ユーザー距離を得る & distancesにPOSTする & drow_user_polyline
-function getSteps() {
+function getSteps(access_token) {
     const start = new Date('2022/2/21 0:00:00').getTime()
     const end = new Date('2022/2/22 0:00:00').getTime()
-    // console.log(new Date(start))
-    // console.log("〜")
-    // console.log(new Date(end))
-
-
-
     var directionsService = new google.maps.DirectionsService(); 
     var directionsRenderer = new google.maps.DirectionsRenderer();
     directionsRenderer.setMap(imap); 
@@ -76,106 +65,34 @@ function getSteps() {
         travelMode: 'DRIVING' //トラベルモード（歩き）
     }; 
     
-    
     // Fit APIからデータを出すfetch
     fetch('https://www.googleapis.com/fitness/v1/users/me/dataSources/derived:com.google.distance.delta:com.google.android.gms:merge_distance_delta/datasets/'+start.toString()+'000000'+'-'+end.toString()+'000000?access_token=' + access_token)
     .then(response => {
         return response.json()
     })
     .then(json => {
-        // console.log(json)
-        // console.log(json.point)
-        // console.log(Object.keys(json.point[0]))
-        // console.log(json.point[0].value)
-            
+
         json.point.forEach(dis => {
-                
-            <%# console.log(dis.value[0].fpVal)
-            console.log(Date(dis.ActiveTimeMillis)) %>
             total = total + dis.value[0].fpVal
         })
-        
-        // console.log(new Date(start))
-        // console.log(Date.now())
-        console.log("ユーザーが歩いた距離は２")
+        console.log("FitAPIから取り出した、ユーザーが歩いた距離は")
         console.log(total)
-
-
-
-
-
-
 
 
         directionsService.route(request, function(result, status) {
             //ステータスがOKの場合、
             if (status === 'OK') {
-                function logger(){
-                    // console.log(result)    //こいつを投げたい！
-                    // console.log(typeof result)
-                    // console.log(Object.keys(result))
-                    // console.log("一層目")
-                    // console.log(Object.keys(result.status))
-                    // console.log(Object.keys(result.geocoded_waypoints))
-                    // console.log(result.routes.length)
-
-                    // console.log("２層目")
-                    // console.log(Object.keys(result.routes[0]))
-                    // console.log(result.routes[0].overview_polyline)//今はいらない。使う時がある
-                    // console.log("3層目")
-                    // console.log(Object.keys(result.routes[0].legs))
-                    // console.log(result.routes[0].legs)
-                    // console.log("4層目")
-                    // console.log(Object.keys(result.routes[0].legs[0].steps))
-                    // console.log(result.routes[0].legs[0].steps)
-                    //stepsが0~17の18個ある
-                    //maneuverはいらない。
-                    //distanceとpolylineと"end_location": {"lat": 41.8601859,　"lng": 140.7822841},
-                    // console.log("5層目-1-1")
-                    // console.log(Object.keys(result.routes[0].legs[0].steps[0].distance)) //0~17, length .stepの。
-                    // console.log(result.routes[0].legs[0].steps[0].distance)
-                    // console.log("5層目-1-2")
-                    // console.log(Object.keys(result.routes[0].legs[0].steps[0].distance.value)) //[] よってゴール
-                    console.log(result.routes[0].legs[0].steps[0].distance.value)
-
-
-                    // console.log("5層目-2-1")
-                    // console.log(Object.keys(result.routes[0].legs[0].steps[0].polyline)) //[points]
-                    // console.log(result.routes[0].legs[0].steps[0].polyline)
-                    // console.log("5層目-2-2")
-                    // console.log(Object.keys(result.routes[0].legs[0].steps[0].polyline.points)) //['0','1',~'31']どうやら文字数（32文字）らしい
-                    console.log(result.routes[0].legs[0].steps[0].polyline.points)//文字数を1文字ずつ取り出しても仕方ない。これがゴール！
-
-                    // console.log("5層目-3-1")
-                    // console.log(Object.keys(result.routes[0].legs[0].steps[0].end_location)) //['lat', 'lng']
-                    // console.log(result.routes[0].legs[0].steps[0].end_location)
-                    // console.log("5層目-3-2")
-                    // console.log(Object.keys(result.routes[0].legs[0].steps[0].end_location)) //[] ??? lat f とか出てたが、functionにすればよかった
-                    // console.log(result.routes[0].legs[0].steps[0].end_location.lat())
-                    // console.log(result.routes[0].legs[0].steps[0].end_location.lng())
-
-                    // console.log("こいつらをPOSTするまとめえええええええええええええええええええええ")
-                    // console.log(result.routes[0].legs[0].steps[0].distance.value)
-                    // console.log(result.routes[0].legs[0].steps[0].polyline.points)
-                    // console.log(result.routes[0].legs[0].steps[0].end_location.lat())
-                    // console.log(result.routes[0].legs[0].steps[0].end_location.lng())
-                    // console.log(result.routes[0].legs[0].steps.length - 1)
-                    
-                }
+                
                 let i = 0
                 const route_data = []
                 result.routes[0].legs[0].steps.forEach(element => {
-                    // console.log(element.distance.value)
-                    // console.log(element.polyline.points)
-                    // console.log(element.end_location.lat())
-                    // console.log(element.end_location.lng())
-                    // route_data[i]=[element.distance.value,element.polyline.points,element.end_location.lat(),element.end_location.lng()]
                     route_data[i]=[element.distance.value,element.polyline.points]
                     i += 1
                 });
                 console.log("ルートデータは");
                 console.log(route_data);
-                console.log(route_data.length)
+                console.log("ルートデータの配列長さは")
+                console.log(route_data.length);
                 let count_root = 0
                 let encoded_list = []
 
@@ -185,9 +102,9 @@ function getSteps() {
 
 
 
-                //total = 105678  //100km
-                total = 300000
-                //total = 500000
+                // total = 105678  //100km
+                // total = 300000
+                total = 500000
 
 
 
@@ -198,14 +115,9 @@ function getSteps() {
                     root_dis = root_dis + route_data[count_root][0]
                     encoded_list[count_root] = route_data[count_root][1]
                     count_root += 1
-                    console.log(count_root)
-                }
-                // console.log("while抜けroot_disとencoded_listの値は")
-                // console.log(root_dis)
-                // console.log(encoded_list)
 
-                // console.log("totalは")
-                // console.log(total)
+                }
+
 
                 encoded_list.forEach( element =>{
                     var time_count = 1
@@ -314,8 +226,8 @@ fetch('/distances', {
 })
 .then(function(response){
     const response_message = response.status + ':' + response.statusText
-    console.log(response_message);
-    console.log("/distancesにPOST完了")
+    // console.log(response_message); // 200:OK
+    console.log("299/distancesにPOST完了")
 });
 
 
@@ -350,13 +262,8 @@ function initMap() {
         streetViewControl: false
     });
     imap = map
+    
 }
-
-
-
-
-
-
 
 
 
