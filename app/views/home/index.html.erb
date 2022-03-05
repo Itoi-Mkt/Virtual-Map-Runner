@@ -50,7 +50,6 @@ function callback(e) {
 
 // ユーザー距離を得る & distancesにPOSTする & drow_user_polyline
 function getSteps(access_token) {
-    console.log("53getSteps入った")
     const start = new Date('2022/2/21 0:00:00').getTime()
     const end = new Date('2022/2/22 0:00:00').getTime()
     var directionsService = new google.maps.DirectionsService(); 
@@ -65,12 +64,10 @@ function getSteps(access_token) {
         destination: end_p,   // 到着地点の緯度経度
         travelMode: 'DRIVING' //トラベルモード（歩き）
     }; 
-    console.log("67log通った")
     
     // Fit APIからデータを出すfetch
     fetch('https://www.googleapis.com/fitness/v1/users/me/dataSources/derived:com.google.distance.delta:com.google.android.gms:merge_distance_delta/datasets/'+start.toString()+'000000'+'-'+end.toString()+'000000?access_token=' + access_token)
     .then(response => {
-        console.log("７３fetch通った")
         return response.json()
     })
     .then(json => {
