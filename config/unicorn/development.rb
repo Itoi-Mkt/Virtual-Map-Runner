@@ -1,3 +1,6 @@
+    # /scripts/start_server.shにdeploymentで載っている。CodeDeploy用。
+    # 本番環境への移行時、修正を忘れないこと。
+
     # paths
     app_path = "/var/www/Virtual-Map-Walker"
     pid_path = "#{app_path}/tmp/pids/unicorn.pid"
