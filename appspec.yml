@@ -3,10 +3,7 @@ os: linux
 files:
   - source: /
     destination: /var/www/Virtual-Map-Walker
-permissions:
-  - object: /var/www/
-    owner: ec2-user
-    mode: 775
+
 hooks:
   ApplicationStop:
     - location: scripts/stop_server.sh
