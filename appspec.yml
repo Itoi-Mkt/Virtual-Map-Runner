@@ -8,15 +8,16 @@ hooks:
   ApplicationStop:
     - location: scripts/stop_server.sh
       timeout: 100
-
+      runas: Itoi
   BeforeInstall:
     - location: scripts/clean.sh
       timeout: 200
-
+      runas: Itoi
   AfterInstall:
     - location: scripts/bundle_install.sh
       timeout: 300
-
+      runas: Itoi
   ApplicationStart:
     - location: scripts/start_server.sh
       timeout: 200
+      runas: Itoi
