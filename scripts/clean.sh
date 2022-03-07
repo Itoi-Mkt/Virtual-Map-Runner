@@ -1,2 +1,2 @@
 #!/bin/bash
-rm -rf /var/www/Virtual-Map-Walker
+sudo rm -rf /var/www/Virtual-Map-Walker
