@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RemoveUpdatedAtFromRoutes < ActiveRecord::Migration[5.2]
   def change
     remove_column :routes, :start_lat, :decimal
@@ -8,6 +10,5 @@ class RemoveUpdatedAtFromRoutes < ActiveRecord::Migration[5.2]
 
     add_column :routes, :thumbnail, :binary
     add_column :routes, :other, :text
-    
   end
 end

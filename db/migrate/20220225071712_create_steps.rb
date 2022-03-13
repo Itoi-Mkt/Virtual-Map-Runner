@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateSteps < ActiveRecord::Migration[5.2]
   def change
     create_table :steps do |t|
@@ -6,7 +8,7 @@ class CreateSteps < ActiveRecord::Migration[5.2]
       t.integer :distance_value
       t.text :polyline_points
 
-      t.decimal :end_location_lat, precision: 20, scale: 17 
+      t.decimal :end_location_lat, precision: 20, scale: 17
       t.decimal :end_location_lng, precision: 20, scale: 17
       t.decimal :start_location_lat, precision: 20, scale: 17
       t.decimal :start_location_lng, precision: 20, scale: 17

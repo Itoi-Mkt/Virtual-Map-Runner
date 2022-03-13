@@ -1,2 +1,3 @@
 ---
 BUNDLE_BUILD__MYSQL2: "--with-ldflags=-L/opt/homebrew/opt/openssl@1.1/lib"
+BUNDLE_JOBS: "4"
