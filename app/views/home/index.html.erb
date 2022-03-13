@@ -2,9 +2,7 @@
 <html lang="ja">
 <head>
 <%= csrf_meta_tags %>
-codedeploy
-
-
+<title>chizu-aruko.com</title>
 
 
 <script src="https://apis.google.com/js/client.js"></script>
@@ -215,20 +213,20 @@ const post_data = {
 }; 
 
 
-fetch('/distances', {
-    method: 'POST',
-    credentials: 'same-origin',
-    headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-Token': getCsrfToken()
-    },
-    body : JSON.stringify(post_data),
-})
-.then(function(response){
-    const response_message = response.status + ':' + response.statusText
-    // console.log(response_message); // 200:OK
-    console.log("299/distancesにPOST完了")
-});
+// fetch('/distances', {
+//     method: 'POST',
+//     credentials: 'same-origin',
+//     headers: {
+//             'Content-Type': 'application/json',
+//             'X-CSRF-Token': getCsrfToken()
+//     },
+//     body : JSON.stringify(post_data),
+// })
+// .then(function(response){
+//     const response_message = response.status + ':' + response.statusText
+//     // console.log(response_message); // 200:OK
+//     console.log("299/distancesにPOST完了")
+// });
 
 
 
@@ -241,7 +239,6 @@ window.onload = getToken
 
 
 <meta charset="UTF-8">
-<title>Sample_GoogleMap</title>
 <script>
 
 
