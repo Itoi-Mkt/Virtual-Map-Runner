@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
   include SessionsHelper
   before_action :check_logged_in
@@ -7,5 +9,4 @@ class ApplicationController < ActionController::Base
 
     redirect_to root_path
   end
- 
 end
