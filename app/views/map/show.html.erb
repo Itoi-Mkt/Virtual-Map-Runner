@@ -5,14 +5,212 @@
 <title>chizu-aruko.com</title>
 
 
+
+
+<%# <style>
+html { height: 100% }
+body { height: 100% }
+#gmap { height: 100%; width: 100%}
+</style> %>
+
+<%# 本番用 %>
+<style type="text/css">
+    v\:* {behavior:url(#default#VML);}
+    html, body {width: 100%; height: 100%}
+    body {margin-top: 0px; margin-right: 0px; margin-left: 0px; margin-bottom: 0px}
+</style>
+
 <script src="https://apis.google.com/js/client.js"></script>
+
+<div id="gmap" style="width: 100%; height: 100%;"></div>
+
+<script src="https://www.gstatic.com/external_hosted/jquery2.min.js"></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['API_KEY']%>&callback=initMap" async defer></script>
+
+</head>
+<body>
+
+<meta charset="UTF-8">
+<script>
+
+//initMap
+function initMap() { 
+    // 地図を生成して表示
+    var map = new google.maps.Map(document.getElementById("gmap"), {
+        mapId: "67ef94185bd51ea8",
+        // mapId: "670944507616ce4e",
+        zoom: 7,
+        center: new google.maps.LatLng(43.6850804,142.7975314),  //Madison Av/E 38 St
+        mapTypeId: "roadmap",
+        mapTypeControl: false,
+        zoomControl: false,
+        fullscreenControl: false,
+        rotateControl: false,
+        scaleControl: false,
+        streetViewControl: false
+    });
+    imap = map
+
+    var ingressButtonDiv = document.createElement("div");
+    var ingressButton = new ingressControl(ingressButtonDiv, map);
+    
+    ingressButtonDiv.index = 1;
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(ingressButtonDiv);
+
+}
+
+
+// <div data-type="Mappanel">
+	//zoom_inボタン
+	function ingressControl(buttonDiv, map) {
+	  var buttonUI = document.createElement("div");
+
+	  buttonUI.style.backgroundColor = "rgb(0, 79, 74)";
+	  buttonUI.style.border = "1px solid #59fbea";
+	  buttonUI.style.boxShadow = "rgba(0, 0, 0, 0.3) 0px 1px 4px -1px";
+	  buttonUI.style.cursor = "pointer";
+	  buttonUI.style.padding = "1px 6px";
+			
+	  buttonUI.style.color = "#59fbea";
+	  buttonUI.style.fontFamily = "Coda, Arial,sans-serif";
+	  buttonUI.style.fontSize = "15px";
+	  buttonUI.style.textAlign = "center";
+		
+	  buttonUI.title = "zoom_in";
+	  buttonUI.innerHTML = "zoom_in";
+
+	  buttonDiv.style.padding = "5px";
+	  buttonDiv.appendChild(buttonUI);
+			
+	  google.maps.event.addDomListener(buttonUI, "click", function() {
+			var zoom = imap.getZoom();
+	    imap.setZoom(zoom + 1);
+	  });
+	}
+
+	// zoom_outボタン
+	function ingressControl(buttonDiv, map) {
+	  var buttonUI = document.createElement("div");
+
+	  buttonUI.style.backgroundColor = "rgb(0, 79, 74)";
+	  buttonUI.style.border = "1px solid #59fbea";
+	  buttonUI.style.boxShadow = "rgba(0, 0, 0, 0.3) 0px 1px 4px -1px";
+	  buttonUI.style.cursor = "pointer";
+	  buttonUI.style.padding = "1px 6px";
+			
+	  buttonUI.style.color = "#59fbea";
+	  buttonUI.style.fontFamily = "Coda, Arial,sans-serif";
+	  buttonUI.style.fontSize = "15px";
+	  buttonUI.style.textAlign = "center";
+		
+	  buttonUI.title = "zoom_out";
+	  buttonUI.innerHTML = "zoom_out";
+
+	  buttonDiv.style.padding = "5px";
+	  buttonDiv.appendChild(buttonUI);
+			
+	  google.maps.event.addDomListener(buttonUI, "click", function() {
+			 var zoom = imap.getZoom();
+	    imap.setZoom(zoom - 1);
+	  });
+	}
+
+	// route_windowボタン
+	function ingressControl(buttonDiv, map) {
+	  var buttonUI = document.createElement("div");
+
+	  buttonUI.style.backgroundColor = "rgb(0, 79, 74)";
+	  buttonUI.style.border = "1px solid #59fbea";
+	  buttonUI.style.boxShadow = "rgba(0, 0, 0, 0.3) 0px 1px 4px -1px";
+	  buttonUI.style.cursor = "pointer";
+	  buttonUI.style.padding = "1px 6px";
+			
+	  buttonUI.style.color = "#59fbea";
+	  buttonUI.style.fontFamily = "Coda, Arial,sans-serif";
+	  buttonUI.style.fontSize = "15px";
+	  buttonUI.style.textAlign = "center";
+		
+	  buttonUI.title = "route_window";
+	  buttonUI.innerHTML = "route_window";
+
+	  buttonDiv.style.padding = "5px";
+	  buttonDiv.appendChild(buttonUI);
+			
+	  google.maps.event.addDomListener(buttonUI, "click", function() {
+	    var center = map.getCenter();
+			var zoom = imap.getZoom();
+	    imap.setZoom(zoom);
+	    window.location.href="https://www.~~~=" + center.lat() + "," + center.lng() + "&z=" + zoom;
+	  });
+	}
+
+	// user_windowボタン
+	function ingressControl(buttonDiv, map) {
+	  var buttonUI = document.createElement("div");
+
+	  buttonUI.style.backgroundColor = "rgb(0, 79, 74)";
+	  buttonUI.style.border = "1px solid #59fbea";
+	  buttonUI.style.boxShadow = "rgba(0, 0, 0, 0.3) 0px 1px 4px -1px";
+	  buttonUI.style.cursor = "pointer";
+	  buttonUI.style.padding = "1px 6px";
+			
+	  buttonUI.style.color = "#59fbea";
+	  buttonUI.style.fontFamily = "Coda, Arial,sans-serif";
+	  buttonUI.style.fontSize = "15px";
+	  buttonUI.style.textAlign = "center";
+		
+	  buttonUI.title = "Dive into Ingress";
+	  buttonUI.innerHTML = "Dive into Ingress";
+
+	  buttonDiv.style.padding = "5px";
+	  buttonDiv.appendChild(buttonUI);
+			
+	  google.maps.event.addDomListener(buttonUI, "click", function() {
+	    var center = map.getCenter();
+			var zoom = imap.getZoom();
+	    imap.setZoom(zoom + 1);
+	    window.location.href="https://www.~~~=" + center.lat() + "," + center.lng() + "&z=" + zoom;
+	  });
+	}
+
+	// close_windowボタン
+	function ingressControl(buttonDiv, map) {
+	  var buttonUI = document.createElement("div");
+
+	  buttonUI.style.backgroundColor = "rgb(0, 79, 74)";
+	  buttonUI.style.border = "1px solid #59fbea";
+	  buttonUI.style.boxShadow = "rgba(0, 0, 0, 0.3) 0px 1px 4px -1px";
+	  buttonUI.style.cursor = "pointer";
+	  buttonUI.style.padding = "1px 6px";
+			
+	  buttonUI.style.color = "#59fbea";
+	  buttonUI.style.fontFamily = "Coda, Arial,sans-serif";
+	  buttonUI.style.fontSize = "15px";
+	  buttonUI.style.textAlign = "center";
+		
+	  buttonUI.title = "close_window";
+	  buttonUI.innerHTML = "close_window";
+
+	  buttonDiv.style.padding = "5px";
+	  buttonDiv.appendChild(buttonUI);
+			
+	  google.maps.event.addDomListener(buttonUI, "click", function() {
+	    // window.close;
+	  });
+	}
+// </div>
+
+</script> 
+
+
+
 <script>
 const client_id = '<%= ENV['APLI_CLIANT_ID']%>'
 const scope = ['https://www.googleapis.com/auth/fitness.location.read']
 let total = 0
 let root_dis = 0
 var imap
-
 
 // DBにPOSTするfetch用にCsrfTokenを取る
 const getCsrfToken = () => {
@@ -230,53 +428,7 @@ const post_data = {
 
 window.onload = getToken
 </script>
-</head>
-<body>
 
-
-
-
-<meta charset="UTF-8">
-<script>
-
-
-//initMap
-function initMap() { 
-    // 地図を生成して表示
-    var map = new google.maps.Map(document.getElementById("gmap"), {
-        mapId: "67ef94185bd51ea8",
-        // mapId: "670944507616ce4e",
-        zoom: 7,
-        center: new google.maps.LatLng(43.6850804,142.7975314),  //Madison Av/E 38 St
-        mapTypeId: "roadmap",
-        mapTypeControl: false,
-        zoomControl: false,
-        fullscreenControl: false,
-        rotateControl: false,
-        scaleControl: false,
-        streetViewControl: false
-    });
-    imap = map
-    
-}
-
-
-
-</script> 
-
-
-
-
-<style>
-html { height: 100% }
-body { height: 100% }
-#gmap { height: 100%; width: 100%}
-</style>
-<div id="gmap"></div>
-
-<script src="https://www.gstatic.com/external_hosted/jquery2.min.js"></script>
-
-<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['API_KEY']%>&callback=initMap" async defer></script>
 
 
 </body>
