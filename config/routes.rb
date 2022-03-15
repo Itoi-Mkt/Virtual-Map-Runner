@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  get 'user' => 'users#index'
   root 'home#index'
 
   get 'auth/:provider/callback', to: 'sessions#create'
@@ -8,7 +9,6 @@ Rails.application.routes.draw do
   get 'log_out', to: 'sessions#destroy', as: 'log_out'
 
   resources :sessions, only: %i[create destroy]
-  get 'user', to: 'user#show'
   get 'map', to: 'map#show'
   post 'distances' => 'distances#create'
   post 'route' => 'route#create'
