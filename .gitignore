@@ -28,3 +28,9 @@ vendor/
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+database copy 2.yml
+database copy 3.yml
+database copy.yml
+database.yml
+database1.yml
+client_secret_330143052323-04oe8a1icjql9tdssgahb457bpv9b2gd.apps.googleusercontent.com.json
