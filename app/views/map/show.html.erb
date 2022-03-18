@@ -292,153 +292,203 @@
 		let root_dis = 0
 		var imap
 
-		// 初期化。bodyのonloadでinit()を指定することで呼び出してます
-		function init() {
 
-			// Google Mapで利用する初期設定用の変数
-			var latlng = new google.maps.LatLng(39, 138);
-			var opts = {
-				zoom: 6,
-				mapTypeId: google.maps.MapTypeId.ROADMAP,
-				center: latlng
-			};
-
-			// getElementById("map")の"map"は、body内の<div id="map">より
-			map = new google.maps.Map(document.getElementById("map"), opts);
-
-			akiba_button = document.getElementById("goto_akiba");
-			akiba_button.index = 1;
-			map.controls[google.maps.ControlPosition.TOP_CENTER].push(akiba_button);
-
-			google.maps.event.addDomListener(akiba_button, 'click', function() {
-				map.setCenter(new google.maps.LatLng(35.69839680452033, 139.77325916290283));
-				map.setZoom(17);
-			});
-		}
 
 
 		// DBにPOSTするfetch用にCsrfTokenを取る
 		const getCsrfToken = () => {
-				const metas = document.getElementsByTagName('meta');
-				for (let meta of metas) {
-						if (meta.getAttribute('name') === 'csrf-token') {
-								return meta.getAttribute('content');
-						}
+			const metas = document.getElementsByTagName('meta');
+			for (let meta of metas) {
+				if (meta.getAttribute('name') === 'csrf-token') {
+					return meta.getAttribute('content');
 				}
-				return '';
+			}
+			return '';
 		}
 
 		// callbackを呼ぶ
 		function getToken() {
-				gapi.auth.authorize({client_id: client_id, scope: scope, immediate: false, response_type: 'token'}, callback)
+			gapi.auth.authorize({client_id: client_id, scope: scope, immediate: false, response_type: 'token'}, callback)
 		}
 
 		// getStepsを呼ぶ
 		function callback(e) {
-				fetch('https://www.googleapis.com/fitness/v1/users/me/dataSources?access_token=' + e.access_token)
+			fetch('https://www.googleapis.com/fitness/v1/users/me/dataSources?access_token=' + e.access_token)
 				
-				.then(response => {
-						return response.json()
-				})
+			.then(response => {					
+				return response.json()
+			})
 				
-				.then(json => {
-						console.log(json)
-						getSteps(e.access_token)
-				})
+			.then(json => {
+				console.log("この中に端末が入っている")
+				console.log(json)
+					
+				getSteps(e.access_token, json)
+
+			})
 
 		}
 
 		// ユーザー距離を得る & distancesにPOSTする & drow_user_polyline
-		function getSteps(access_token) {
-				const start = new Date('2022/2/21 0:00:00').getTime()
-				const end = new Date('2022/2/22 0:00:00').getTime()
-				var directionsService = new google.maps.DirectionsService(); 
-				var directionsRenderer = new google.maps.DirectionsRenderer();
-				directionsRenderer.setMap(imap); 
-				//リクエストの出発点の位置（Empire State Building 出発地点の緯度経度）
-				var start_p = new google.maps.LatLng(45.397691,141.699845);  
-				//リクエストの終着点の位置（Grand Central Station 到着地点の緯度経度）
-				var end_p = new google.maps.LatLng( 41.8597732,140.7994969);  
-				var request = {
-						origin: start_p,      // 出発地点の緯度経度
-						destination: end_p,   // 到着地点の緯度経度
-						travelMode: 'DRIVING' //トラベルモード（歩き）
-				}; 
+		function getSteps(access_token, responsejson) {
+			const start = new Date('2022/2/21 0:00:00').getTime()
+			const end = new Date('2022/2/22 0:00:00').getTime()
+			var directionsService = new google.maps.DirectionsService(); 
+			var directionsRenderer = new google.maps.DirectionsRenderer();
+			directionsRenderer.setMap(imap); 
+			//リクエストの出発点の位置（Empire State Building 出発地点の緯度経度）
+			var start_p = new google.maps.LatLng(45.397691,141.699845);  
+			//リクエストの終着点の位置（Grand Central Station 到着地点の緯度経度）
+			var end_p = new google.maps.LatLng( 41.8597732,140.7994969);  
+			var request = {
+				origin: start_p,      // 出発地点の緯度経度
+				destination: end_p,   // 到着地点の緯度経度
+				travelMode: 'DRIVING' //トラベルモード（歩き）
+			}; 
 				
-				// Fit APIからデータを出すfetch
-				fetch('https://www.googleapis.com/fitness/v1/users/me/dataSources/derived:com.google.distance.delta:com.google.android.gms:merge_distance_delta/datasets/'+start.toString()+'000000'+'-'+end.toString()+'000000?access_token=' + access_token)
+			// Fit APIからデータを出すfetch
+			console.log("Fit APIからデータを出すfetch")
+			console.log(responsejson)
+			console.log(Object.keys(responsejson))
+			console.log(Object.keys(responsejson.dataSource))
+			responsejson.dataSource.forEach(element => {
+				// console.log(element.dataStreamId)
+				// console.log(responsejson.dataSource.length)
+				// console.log(Object.keys(responsejson.dataSource[0]))
+
+				data ='https://www.googleapis.com/fitness/v1/users/me/dataSources/' + element.dataStreamId + '/datasets/'
+				console.log(data+start.toString()+'000000'+'-'+end.toString()+'000000?access_token=' + access_token)
+				// fetchして距離を取得
+				fetch(data+start.toString()+'000000'+'-'+end.toString()+'000000?access_token=' + access_token)
 				.then(response => {
-						return response.json()
+
+					return response.json()
 				})
+				// totalに+=
+				// fetch(data+start.toString()+'000000'+'-'+end.toString()+'000000?access_token=' + access_token)
+				// .then(response => {
+				// 	return response.json()
+				// })
+				// .then(json => {
+
+				// 	json.point.forEach(dis => {
+				// 		total += total + dis.value[0].fpVal
+				// 	})
+				// })
+				// console.log("FitAPIから取り出した、ユーザーが歩いた距離は")
+				// console.log(total)
+
+
+
+
+
 				.then(json => {
 
-						json.point.forEach(dis => {
-								total = total + dis.value[0].fpVal
-						})
-						console.log("FitAPIから取り出した、ユーザーが歩いた距離は")
-						console.log(total)
+					json.point.forEach(dis => {
+						total = total + dis.value[0].fpVal
+					})
 
-
-						directionsService.route(request, function(result, status) {
-								//ステータスがOKの場合、
-								if (status === 'OK') {
-										
-										let i = 0
-										const route_data = []
-										result.routes[0].legs[0].steps.forEach(element => {
-												route_data[i]=[element.distance.value,element.polyline.points]
-												i += 1
-										});
-										console.log("ルートデータは");
-										console.log(route_data);
-										console.log("ルートデータの配列長さは")
-										console.log(route_data.length);
-										let count_root = 0
-										let encoded_list = []
-
-
-										// ##########################################################モックプレゼン用
-
-
-										// total = 105678  //100km
-										// total = 300000
-										total = 500000
-
-
-
-
-										//ユーザー距離＜ルートの距離になるまで、配列にencodedされた文字列を格納
-										//&& route_dataの配列数を超えても終了(どちらか片方でもfalseなら終了)
-										while (root_dis < total && route_data.length > count_root) {
-												root_dis = root_dis + route_data[count_root][0]
-												encoded_list[count_root] = route_data[count_root][1]
-												count_root += 1
-
-										}
-
-
-										encoded_list.forEach( element =>{
-												var time_count = 1
-												var decoded_list = get_decoded_polyline(element)
-												const onePath = new google.maps.Polyline({
-														path: decoded_list,
-														geodesic: true,
-														strokeColor: "#0000FF",
-														strokeOpacity: 0.7,
-														strokeWeight: 8,
-												});
-												onePath.setMap(imap);
-
-												
-										})
-
-								}else{
-										alert("取得できませんでした：" + status);
-								}
-
-						});
+					console.log("FitAPIから取り出した、ユーザーが歩いた距離は")
+				  console.log(total)
 
 				})
+
+			});
+
+
+			
+
+
+
+			///////////////////// fetchの中にdirectionServiceの関数 /////////////////////
+
+			fetch('https://www.googleapis.com/fitness/v1/users/me/dataSources/derived:com.google.distance.delta:com.google.android.gms:merge_distance_delta/datasets/'+start.toString()+'000000'+'-'+end.toString()+'000000?access_token=' + access_token)
+			.then(response => {
+				console.log(response)
+				return response.json()
+			})
+			.then(json => {
+
+				console.log("FitAPIから取り出した、ユーザーが歩いた距離は")
+				console.log(total)
+
+
+				///////////////////// directionServiceの関数 /////////////////////
+
+				directionsService.route(request, function(result, status) {
+					// ステータスがOKの場合、
+					
+					if (status === 'OK') {
+										
+						let i = 0
+						const route_data = []
+						
+						
+						
+						// JSONの触り方////////////////////////
+
+
+						result.routes[0].legs[0].steps.forEach(element => {
+							route_data[i]=[element.distance.value,element.polyline.points]
+							i += 1
+						});
+						console.log("ルートデータは");
+						console.log(route_data);
+						console.log("ルートデータの配列長さは")
+						console.log(route_data.length);
+						let count_root = 0
+						let encoded_list = []
+
+
+						// ##########################################################モックプレゼン用
+
+
+						// total = 105678  //100km
+						// total = 300000
+						total = 500000
+
+
+
+
+						//ユーザー距離＜ルートの距離になるまで、配列にencodedされた文字列を格納
+						//&& route_dataの配列数を超えても終了(どちらか片方でもfalseなら終了)
+						while (root_dis < total && route_data.length > count_root) {
+							root_dis = root_dis + route_data[count_root][0]
+							encoded_list[count_root] = route_data[count_root][1]
+							count_root += 1
+
+						}
+
+						encoded_list.forEach( element =>{
+							var time_count = 1
+							var decoded_list = get_decoded_polyline(element)
+							const onePath = new google.maps.Polyline({
+								path: decoded_list,
+								geodesic: true,
+								strokeColor: "#0000FF",
+								strokeOpacity: 0.7,
+								strokeWeight: 8,
+							});
+							onePath.setMap(imap);
+
+												
+						})
+
+					}else{
+						alert("取得できませんでした：" + status);
+					}
+
+				});
+
+			})
+
+
+
+
+
+
+
+
 
 		}
 
@@ -446,70 +496,70 @@
 
 		//これはひとつの文字列に対してデコードを実行する。座標を返す
 		function get_decoded_polyline(encoded){
-				var count = 0
-				var poly_latlng = []
-				//encoded_aをdecodePolylineすると、座標リストになるので、それをpoly_latlngに格納
-				decodePolyline(encoded).forEach(element => {
-						element.lat = element.latitude
-						element.lng = element.longitude
-						delete element.latitude;
-						delete element.longitude;
-						poly_latlng[count] = element
-						count += 1
-				});
-				return poly_latlng
+			var count = 0
+			var poly_latlng = []
+			//encoded_aをdecodePolylineすると、座標リストになるので、それをpoly_latlngに格納
+			decodePolyline(encoded).forEach(element => {
+				element.lat = element.latitude
+				element.lng = element.longitude
+				delete element.latitude;
+				delete element.longitude;
+				poly_latlng[count] = element
+				count += 1
+			});
+			return poly_latlng
 		}
 
 		function decodePolyline(encoded) {
-				if (!encoded) {
-						return [];
-				}
-				var poly = [];
-				var index = 0, len = encoded.length;
-				var lat = 0, lng = 0;
+			if (!encoded) {
+				return [];
+			}
+			var poly = [];
+			var index = 0, len = encoded.length;
+			var lat = 0, lng = 0;
 
-				while (index < len) {
-						var b, shift = 0, result = 0;
+			while (index < len) {
+				var b, shift = 0, result = 0;
 
-						do {
-								b = encoded.charCodeAt(index++) - 63;
-								result = result | ((b & 0x1f) << shift);
-								shift += 5;
-						} while (b >= 0x20);
+				do {
+					b = encoded.charCodeAt(index++) - 63;
+					result = result | ((b & 0x1f) << shift);
+					shift += 5;
+				} while (b >= 0x20);
 
-						var dlat = (result & 1) != 0 ? ~(result >> 1) : (result >> 1);
-						lat += dlat;
+				var dlat = (result & 1) != 0 ? ~(result >> 1) : (result >> 1);
+				lat += dlat;
 
-						shift = 0;
-						result = 0;
+				shift = 0;
+				result = 0;
 
-						do {
-								b = encoded.charCodeAt(index++) - 63;
-								result = result | ((b & 0x1f) << shift);
-								shift += 5;
-						} while (b >= 0x20);
+				do {
+					b = encoded.charCodeAt(index++) - 63;
+					result = result | ((b & 0x1f) << shift);
+					shift += 5;
+				} while (b >= 0x20);
 
-						var dlng = (result & 1) != 0 ? ~(result >> 1) : (result >> 1);
-						lng += dlng;
+				var dlng = (result & 1) != 0 ? ~(result >> 1) : (result >> 1);
+				lng += dlng;
 
-						var p = {
-								latitude: lat / 1e5,
-								longitude: lng / 1e5,
-						};
-						poly.push(p);
-				}
+				var p = {
+					latitude: lat / 1e5,
+					longitude: lng / 1e5,
+				};
+				poly.push(p);
+			}
 
-				return poly;
+			return poly;
 		}
 
 
 
 
 		const post_data = {
-				//DBに送るデータの骨子
-				w_day: "2022-04-04",
-				w_dis: 4444.44,
-				distance: "sasasa"
+			//DBに送るデータの骨子
+			w_day: "2022-04-04",
+			w_dis: 4444.44,
+			distance: "sasasa"
 		}; 
 
 

@@ -3,7 +3,6 @@
 Rails.application.routes.draw do
   get 'terminals/index' => 'terminals#index'
 
-
   get 'user' => 'users#index'
   root 'home#index'
 
