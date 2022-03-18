@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  get 'terminals/index'
   get 'user' => 'users#index'
   root 'home#index'
 
