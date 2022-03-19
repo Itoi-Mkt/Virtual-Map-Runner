@@ -289,7 +289,7 @@
 		const client_id = '<%= ENV['APLI_CLIANT_ID']%>'
 		const scope = ['https://www.googleapis.com/auth/fitness.location.read']
 		let total = 0
-		let root_dis = 0
+		let route_dis = 0
 		var imap
 
 
@@ -327,7 +327,7 @@
 
 		}
 
-		// ユーザー距離を得る & distancesにPOSTする & drow_user_polyline
+		// Googleからユーザー距離を得る & distancesにPOSTする & drow_user_polyline
 		function getSteps(access_token, responsejson) {
 			const start = new Date('2000/1/1 0:00:00').getTime()
 			// console.log("startの時間")
@@ -397,18 +397,30 @@
 			var directionsService = new google.maps.DirectionsService(); 
 			var directionsRenderer = new google.maps.DirectionsRenderer();
 			directionsRenderer.setMap(imap); 
-			//リクエストの出発点の位置（Empire State Building 出発地点の緯度経度）
-			var start_p = new google.maps.LatLng(45.397691,141.699845);  
-			//リクエストの終着点の位置（Grand Central Station 到着地点の緯度経度）
-			var end_p = new google.maps.LatLng( 41.8597732,140.7994969);  
-			var request = {
-				origin: start_p,      // 出発地点の緯度経度
-				destination: end_p,   // 到着地点の緯度経度
-				travelMode: 'DRIVING' //トラベルモード（歩き）
-			}; 
+
+			//////////////////////////////////////////////////////
 
 
 
+
+      //リクエストの出発点の位置（Empire State Building 出発地点の緯度経度）
+      var start_p = new google.maps.LatLng( 33.5884726,130.3948159);  //天神駅
+      //リクエストの終着点の位置（Grand Central Station 到着地点の緯度経度）
+      var end_p = new google.maps.LatLng( 30.9992477,130.6577254);  //御崎神社
+
+      var request = {
+        origin: start_p,      // 出発地点の緯度経度
+        destination: end_p,   // 到着地点の緯度経度
+        travelMode: 'DRIVING', //トラベルモード（歩き）
+        // avoidHighways: true
+      }; 
+
+
+
+			//////////////////////////////////////////////////////
+
+
+			// 
 			new Promise((resolve, reject) => {
   			console.log("Promise");
   			resolve();
@@ -441,8 +453,36 @@
 						console.log(route_data);
 						console.log("ルートデータの配列長さは")
 						console.log(route_data.length);
-						let count_root = 0
-						let encoded_list = []
+						// let count_route = 0
+
+						const post_data = {
+							//DBに送るデータの骨子
+							// w_day: "2022-03-19",
+							// w_dis: 1111.111,
+							distance: route_data
+						}; 
+
+
+						// fetch('/distances', {
+						fetch('/steps', {							
+						    method: 'POST',
+						    credentials: 'same-origin',
+						    headers: {
+						            'Content-Type': 'application/json',
+						            'X-CSRF-Token': getCsrfToken()
+						    },
+						    body : JSON.stringify(post_data),
+						})
+						.then(function(response){
+						    const response_message = response.status + ':' + response.statusText
+						    // console.log(response_message); // 200:OK
+						    console.log("299/stepsにPOST完了")
+						});
+
+
+
+						let encoded_reached_list = []
+						let encoded_unreached_list = []
 
 
 						// ##########################################################モックプレゼン用
@@ -450,21 +490,27 @@
 
 						// total = 105678  //100km
 						// total = 300000
-						total = 1500000
+						total = 500000
+						//total = 1500000
 
 
 
 
-						//ユーザー距離＜ルートの距離になるまで、配列にencodedされた文字列を格納
-						//&& route_dataの配列数を超えても終了(どちらか片方でもfalseなら終了)
-						while (root_dis < total && route_data.length > count_root) {
-							root_dis = root_dis + route_data[count_root][0]
-							encoded_list[count_root] = route_data[count_root][1]
-							count_root += 1
-
+						//ルート距離＜ユーザーの距離になるまで
+						//reached_listにencodedされた文字列を格納
+						//残りをunreached_listに格納
+						for (let count_route = 0; count_route < route_data.length; count_route++) {
+  						route_dis = route_dis + route_data[count_route][0]
+							if (route_dis < total) {
+								encoded_reached_list.push(route_data[count_route][1])
+							}else{
+    						encoded_unreached_list.push(route_data[count_route][1])
+							}
 						}
 
-						encoded_list.forEach( element =>{
+
+
+						encoded_reached_list.forEach( element =>{
 							var time_count = 1
 							var decoded_list = get_decoded_polyline(element)
 							const onePath = new google.maps.Polyline({
@@ -475,8 +521,19 @@
 								strokeWeight: 8,
 							});
 							onePath.setMap(imap);
+						})
 
-												
+						encoded_unreached_list.forEach( element =>{
+							var time_count = 1
+							var decoded_list = get_decoded_polyline(element)
+							const onePath = new google.maps.Polyline({
+								path: decoded_list,
+								geodesic: true,
+								strokeColor: "#000000",
+								strokeOpacity: 0.4,
+								strokeWeight: 4,
+							});
+							onePath.setMap(imap);
 						})
 
 					}else{
@@ -506,6 +563,8 @@
 			});
 			return poly_latlng
 		}
+
+
 
 		function decodePolyline(encoded) {
 			if (!encoded) {
@@ -552,12 +611,12 @@
 
 
 
-		const post_data = {
-			//DBに送るデータの骨子
-			w_day: "2022-04-04",
-			w_dis: 4444.44,
-			distance: "sasasa"
-		}; 
+		// const post_data = {
+		// 	//DBに送るデータの骨子
+		// 	w_day: "2022-03-19",
+		// 	w_dis: 1111.111,
+		// 	distance: "dafa"
+		// }; 
 
 
 		// fetch('/distances', {
