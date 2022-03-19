@@ -9,6 +9,7 @@ class DistancesController < ApplicationController
 
   def create
     pp 'createだよー'
+    pp params
     # binding.pry
 
     # wday = params.require(:w_day)

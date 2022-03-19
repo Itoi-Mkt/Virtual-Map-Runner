@@ -2,29 +2,45 @@
 
 class StepsController < ApplicationController
   skip_before_action :check_logged_in, only: :create
-  skip_before_action :check_logged_in, only: :show
+
+  def new
+    # @distance = Distance.new
+  end
+
+  
+
   def create
     pp 'stepsのcreateだよー'
+    pp params
     # binding.pry
-    steps = params.require(:_json)
-    steps.each do |st|
-      step = Step.new(
+    
+    dis = params.require(:distance)
+    dis.each do |element|
+      p "test"
+      
+      dis_value = element[0]
+      poly_points = element[1]
+      @step = Step.new(
         route_id: 1,
-        distance_value: st[0],
-        polyline_points: st[1],
-        end_location_lat: st[2],
-        end_location_lng: st[3]
+        distance_value: dis_value,
+        polyline_points: poly_points
       )
-      pp(step[:distance_value])
-      # step.save
-      # ルートを付け加えたくなったらSaveのコメントアウトを外す
+      # @step.save
     end
+
+    # binding.pry
+
   end
 
   def show
-    pp 'stepsのshowだよー'
-    step = Step.select('id', 'polyline_points', 'distance_value')
-    gon.steps = step
-    # pp gon.steps   OK,通ってる
+    # users = { id:1, nickname: "Saiga", age: 22 }
+    @steps = Step.all
+    # render json: @steps
+    respond_to do |format|
+      format.json {render :json => @steps}
+    end
   end
+
+
+
 end
