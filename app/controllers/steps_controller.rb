@@ -7,6 +7,8 @@ class StepsController < ApplicationController
     # @distance = Distance.new
   end
 
+  
+
   def create
     pp 'stepsのcreateだよー'
     pp params
@@ -26,11 +28,19 @@ class StepsController < ApplicationController
       # @step.save
     end
 
-
-    
-    # @step.save
     # binding.pry
-    # ここから地図に入る？
-    # redirect_to root_path
+
   end
+
+  def show
+    # users = { id:1, nickname: "Saiga", age: 22 }
+    @steps = Step.all
+    # render json: @steps
+    respond_to do |format|
+      format.json {render :json => @steps}
+    end
+  end
+
+
+
 end

@@ -430,119 +430,145 @@
 
 				console.log("FitAPIから取り出した、ユーザーが歩いた距離は2")
 				console.log(total)
+			})
 
 
-				///////////////////// directionServiceの関数 /////////////////////
 
-				directionsService.route(request, function(result, status) {
+			// 	///////////////////// 経路登録用・directionServiceの関数 /////////////////////
+			// .then(() => {
+			// 	directionsService.route(request, function(result, status) {
 
-					// ステータスがOKの場合、
-					if (status === 'OK') {
+			// 		// ステータスがOKの場合、
+			// 		if (status === 'OK') {
 										
-						let i = 0
-						const route_data = []
+			// 			let i = 0
+			// 			const route_data = []
 						
-						
-						
-						// JSONの触り方
-						result.routes[0].legs[0].steps.forEach(element => {
-							route_data[i]=[element.distance.value,element.polyline.points]
-							i += 1
-						});
-						console.log("ルートデータは");
-						console.log(route_data);
-						console.log("ルートデータの配列長さは")
-						console.log(route_data.length);
-						// let count_route = 0
+			// 			// JSONの触り方
+			// 			result.routes[0].legs[0].steps.forEach(element => {
+			// 				route_data[i]=[element.distance.value,element.polyline.points]
+			// 				i += 1
 
-						const post_data = {
-							//DBに送るデータの骨子
-							// w_day: "2022-03-19",
-							// w_dis: 1111.111,
-							distance: route_data
-						}; 
+			// 			});
+
+			// 			console.log("ルートデータは");
+			// 			console.log(route_data);
+			// 			console.log("ルートデータの配列長さは")
+			// 			console.log(route_data.length);
+			// 			// let count_route = 0
+
+			// 			const post_data = {
+			// 				//DBに送るデータの骨子
+			// 				distance: route_data
+			// 			}; 
 
 
-						// fetch('/distances', {
-						fetch('/steps', {							
-						    method: 'POST',
-						    credentials: 'same-origin',
-						    headers: {
-						            'Content-Type': 'application/json',
-						            'X-CSRF-Token': getCsrfToken()
-						    },
-						    body : JSON.stringify(post_data),
-						})
-						.then(function(response){
-						    const response_message = response.status + ':' + response.statusText
-						    // console.log(response_message); // 200:OK
-						    console.log("299/stepsにPOST完了")
-						});
+			// 			fetch('/steps', {							
+			// 			  method: 'POST',
+			// 			  credentials: 'same-origin',
+			// 		    headers: {
+			// 	        'Content-Type': 'application/json',
+			// 		      'X-CSRF-Token': getCsrfToken()
+			// 			  },
+			// 			  body : JSON.stringify(post_data),
+			// 			})
+			// 			.then(function(response){
+			// 			  const response_message = response.status + ':' + response.statusText
+			// 			  // console.log(response_message); // 200:OK
+			// 			  console.log("299/stepsにPOST完了")
+			// 			});
 
 
 
-						let encoded_reached_list = []
-						let encoded_unreached_list = []
+			// 			let encoded_reached_list = []
+			// 			let encoded_unreached_list = []
 
 
-						// ##########################################################モックプレゼン用
-
-
-						// total = 105678  //100km
-						// total = 300000
-						total = 500000
-						//total = 1500000
-
+			// 			// ##########################################################モックプレゼン用
+			// 			// total = 105678  //100km
+			// 			// total = 300000
+			// 			total = 500000
+			// 			//total = 1500000
 
 
 
-						//ルート距離＜ユーザーの距離になるまで
-						//reached_listにencodedされた文字列を格納
-						//残りをunreached_listに格納
-						for (let count_route = 0; count_route < route_data.length; count_route++) {
-  						route_dis = route_dis + route_data[count_route][0]
-							if (route_dis < total) {
-								encoded_reached_list.push(route_data[count_route][1])
-							}else{
-    						encoded_unreached_list.push(route_data[count_route][1])
-							}
-						}
+			// 			//ルート距離＜ユーザーの距離になるまで
+			// 			//reached_listにencodedされた文字列を格納
+			// 			//残りをunreached_listに格納
+			// 			for (let count_route = 0; count_route < route_data.length; count_route++) {
+  		// 				route_dis = route_dis + route_data[count_route][0]
+			// 				if (route_dis < total) {
+			// 					encoded_reached_list.push(route_data[count_route][1])
+			// 				}else{
+    	// 					encoded_unreached_list.push(route_data[count_route][1])
+			// 				}
+			// 			}
 
 
 
-						encoded_reached_list.forEach( element =>{
-							var time_count = 1
-							var decoded_list = get_decoded_polyline(element)
-							const onePath = new google.maps.Polyline({
-								path: decoded_list,
-								geodesic: true,
-								strokeColor: "#0000FF",
-								strokeOpacity: 0.7,
-								strokeWeight: 8,
-							});
-							onePath.setMap(imap);
-						})
+			// 			encoded_reached_list.forEach( element =>{
+			// 				var time_count = 1
+			// 				var decoded_list = get_decoded_polyline(element)
+			// 				const onePath = new google.maps.Polyline({
+			// 					path: decoded_list,
+			// 					geodesic: true,
+			// 					strokeColor: "#0000FF",
+			// 					strokeOpacity: 0.7,
+			// 					strokeWeight: 8,
+			// 				});
+			// 				onePath.setMap(imap);
+			// 			})
 
-						encoded_unreached_list.forEach( element =>{
-							var time_count = 1
-							var decoded_list = get_decoded_polyline(element)
-							const onePath = new google.maps.Polyline({
-								path: decoded_list,
-								geodesic: true,
-								strokeColor: "#000000",
-								strokeOpacity: 0.4,
-								strokeWeight: 4,
-							});
-							onePath.setMap(imap);
-						})
+			// 			encoded_unreached_list.forEach( element =>{
+			// 				var time_count = 1
+			// 				var decoded_list = get_decoded_polyline(element)
+			// 				const onePath = new google.maps.Polyline({
+			// 					path: decoded_list,
+			// 					geodesic: true,
+			// 					strokeColor: "#000000",
+			// 					strokeOpacity: 0.4,
+			// 					strokeWeight: 4,
+			// 				});
+			// 				onePath.setMap(imap);
+			// 			})
 
-					}else{
-						alert("取得できませんでした：" + status);
-					} //END if
+			// 		}else{
+			// 			alert("取得できませんでした：" + status);
+			// 		} //END if
 
-				}); //END directionsService.route
+			// 	}); //END directionsService.route
 
-			}) //END .then
+			// }) //END .then
+
+			// 	///////////////////// 経路登録用・directionServiceの関数 /////////////////////			
+
+
+			// 	///////////////////// 経路表示用 /////////////////////	
+
+			.then(() => {
+
+				fetch('/steps.json', {							
+					method: 'GET',
+					credentials: 'same-origin',
+				})
+
+				.then(response => {
+					return response.json()
+				})
+
+				.then(json => {
+					json.forEach(dis => {
+						console.log("json返ってくるか？")
+						console.log(dis)
+					})
+
+					console.log("どうだ？")  //debug
+
+				})
+
+
+			})
+			// 	///////////////////// 経路表示用 /////////////////////
 
 		} //END function getSteps
 
