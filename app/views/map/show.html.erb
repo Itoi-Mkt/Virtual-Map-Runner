@@ -344,10 +344,10 @@
 			// console.log(Object.keys(responsejson))
 			// console.log(Object.keys(responsejson.dataSource))
 			responsejson.dataSource.forEach(element => {
-				console.log("取得端末名")
-				console.log(element.dataStreamId)
-				console.log(Object.prototype.toString.call(element.dataStreamId.substr(0,3)))
-				console.log(element.dataStreamId.substr(0,3))
+				// console.log("取得端末名")
+				// console.log(element.dataStreamId)
+				// console.log(Object.prototype.toString.call(element.dataStreamId.substr(0,3)))
+				// console.log(element.dataStreamId.substr(0,3))
 
 
 
@@ -359,8 +359,8 @@
 					// console.log(Object.keys(responsejson.dataSource[0]))
 
 					data ='https://www.googleapis.com/fitness/v1/users/me/dataSources/' + element.dataStreamId + '/datasets/'
-					console.log(data+start.toString()+'000000'+'-'+end.toString()+'000000?access_token=' + access_token)
-					// fetchして距離を取得
+					// console.log(data+start.toString()+'000000'+'-'+end.toString()+'000000?access_token=' + access_token)
+					// fetchで距離を取得
 					fetch(data+start.toString()+'000000'+'-'+end.toString()+'000000?access_token=' + access_token)
 
 					.then(response => {
@@ -382,13 +382,14 @@
 
 					})
 				
-				}
+				} //END if
 
-			});
+			}); //END responsejson.dataSource.forEach
 
 
+
+			// function getSteps内
 			
-
 
 
 			///////////////////// fetchの中にdirectionServiceの関数 /////////////////////
@@ -406,7 +407,8 @@
 				travelMode: 'DRIVING' //トラベルモード（歩き）
 			}; 
 
-			//fetch('https://www.googleapis.com/fitness/v1/users/me/dataSources/derived:com.google.distance.delta:com.google.android.gms:merge_distance_delta/datasets/'+start.toString()+'000000'+'-'+end.toString()+'000000?access_token=' + access_token)
+
+
 			new Promise((resolve, reject) => {
   			console.log("Promise");
   			resolve();
@@ -421,8 +423,8 @@
 				///////////////////// directionServiceの関数 /////////////////////
 
 				directionsService.route(request, function(result, status) {
+
 					// ステータスがOKの場合、
-					
 					if (status === 'OK') {
 										
 						let i = 0
@@ -448,7 +450,7 @@
 
 						// total = 105678  //100km
 						// total = 300000
-						total = 500000
+						total = 1500000
 
 
 
@@ -479,21 +481,13 @@
 
 					}else{
 						alert("取得できませんでした：" + status);
-					}
+					} //END if
 
-				});
+				}); //END directionsService.route
 
-			})
+			}) //END .then
 
-
-
-
-
-
-
-
-
-		}
+		} //END function getSteps
 
 
 
