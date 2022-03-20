@@ -25,7 +25,7 @@ a {
 
 h1, h2, h3, h4, h5, h6, p {
   margin: 0;
-  color: #f5f8fa;
+  color: #373b3e;
 }
 
 body {
@@ -38,15 +38,18 @@ body {
 .mappanel-wrapper {
   position: fixed;
   /*基準を画面の左下に*/
-  bottom: 0;
-  left: 0;
+  bottom: 20;
+  left: 40;
   margin: 0;
-  width: 100%;
+  width: 80%;
+  pointer-events: none;
 }
 
 .mappanel {
   float: left;
   width: 20%;
-  opacity: 0.5;
+  opacity: 1;
+  pointer-events: all;
+
 }
 /*# sourceMappingURL=map.css.map */
