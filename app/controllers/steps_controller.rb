@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class StepsController < ApplicationController
-  skip_before_action :check_logged_in, only: :create
+  # skip_before_action :check_logged_in, only: :show
 
   def new
     # @distance = Distance.new
@@ -36,8 +36,15 @@ class StepsController < ApplicationController
     # users = { id:1, nickname: "Saiga", age: 22 }
     @steps = Step.all
     # render json: @steps
+
+
     respond_to do |format|
-      format.json {render :json => @steps}
+      # リクエストされるフォーマットがHTML形式の場合
+      format.html 
+
+      # リクエストされるフォーマットがJSON形式の場合
+      format.json { render json: @steps } 
+      # @usersをjson形式のデータへ変換して返す
     end
   end
 
