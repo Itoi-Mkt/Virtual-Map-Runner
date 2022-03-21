@@ -2,15 +2,14 @@
 
 Rails.application.routes.draw do
   get 'terminals/index' => 'terminals#index'
-
   get 'user' => 'users#index'
   root 'home#index'
 
-  get 'auth/:provider/callback', to: 'sessions#create'
-  get 'auth/failure', to: redirect('/')
-  get 'log_out', to: 'sessions#destroy', as: 'log_out'
+  # get 'auth/:provider/callback', to: 'sessions#create'
+  # get 'auth/failure', to: redirect('/')
+  # get 'log_out', to: 'sessions#destroy', as: 'log_out'
 
-  resources :sessions, only: %i[create destroy]
+  # resources :sessions, only: %i[create destroy]
   get 'map', to: 'map#show'
   post 'distances' => 'distances#create'
   post 'route' => 'route#create'
