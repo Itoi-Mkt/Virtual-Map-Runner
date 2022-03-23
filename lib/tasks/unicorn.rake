@@ -39,7 +39,7 @@ namespace :unicorn do
   end
 
   def unicorn_pid
-    File.read('/var/www/｛app_name｝/tmp/unicorn.pid').to_i
+    File.read('/var/www/Virtual-Map-Walker/tmp/unicorn.pid').to_i
   rescue Errno::ENOENT
     raise 'Unicorn does not seem to be running'
   end
