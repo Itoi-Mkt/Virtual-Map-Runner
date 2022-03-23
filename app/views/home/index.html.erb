@@ -4,13 +4,14 @@
     <%= csrf_meta_tags %>
     <title>地図歩こう</title>
     <%= stylesheet_link_tag "home", media: "all" %>
+    <script></script>
   </head>
   <body>
     <meta charset="UTF-8">
     <header>
       <div class =container> 
         <div class =header-left>
-          <img class="logo" src="assets/logo.jpg">
+          <a href="/map"><img class="logo" src="assets/logo.jpg"></a>
         </div>
       </div>
     </header>
@@ -20,13 +21,13 @@
           <h1>歩いてきただろう</h1>
         </div>
     </div>
-    <div class="message-wrapper">
-      
-    </div>
+
     <footer>
       <div class="container">
-        <h2>①「地図」をクリック</h2>
-        <h2>②「Googleでログイン」をクリック</h2>
+        <div class="oneline">
+          <h2>①「<a class="maplink" href="/map"> 地図 </a> 」をクリック</h2>
+        </div>
+        <h2>②「Sign in with Google」をクリック</h2>
         <h2>あなたの歩いてきた距離が、地図に表示されます</h2>
       </div>
     </footer> 

@@ -94,7 +94,7 @@
 		function initMap() {
 			var map = new google.maps.Map(document.getElementById("gmap"), {
 				mapId: "67ef94185bd51ea8",
-				zoom: 7,
+				zoom: 6,
 				center: new google.maps.LatLng(43.6850804,142.7975314),
 				mapTypeId: "roadmap",
 				mapTypeControl: false,
@@ -121,6 +121,10 @@
 			imap.setZoom(zoom - 1);
 		}
 
+		function change_map_center(x, y){ 
+			imap.panTo(new google.maps.LatLng(x, y))
+		}
+
 
 		window.onload = getToken
 
@@ -145,8 +149,9 @@
 			reached_list = reached_and_unreached_list[0]
 			unreached_list = reached_and_unreached_list[1]
 
-			draw_polylines(imap, reached_list, "#0000FF", 0.7, 8)
-			draw_polylines(imap, unreached_list, "#000000", 0.4, 4)
+			draw_reached_polylines(imap, reached_list, "#0000FF", 0.7, 8)
+			draw_unreached_polylines(imap, unreached_list, "#000000", 0.4, 4)
+			change_map_center(43.6850804,142.7975314)
 
 		}
 		
@@ -211,7 +216,22 @@
 		}
 
 
-		function draw_polylines(imap, list, color, opacity, stroke_weight){
+		function draw_reached_polylines(imap, list, color, opacity, stroke_weight){
+			list.forEach( element =>{
+				var time_count = 1
+				var decoded_list = get_decoded_latlng_list(element.polyline_points)
+				const onePath = new google.maps.Polyline({
+					path: decoded_list,
+					geodesic: true,
+					strokeColor: color,
+					strokeOpacity: opacity,
+					strokeWeight: stroke_weight,
+				});
+				onePath.setMap(imap);
+			})
+		}
+
+		function draw_unreached_polylines(imap, list, color, opacity, stroke_weight){
 			list.forEach( element =>{
 				var time_count = 1
 				var decoded_list = get_decoded_latlng_list(element.polyline_points)
@@ -227,10 +247,10 @@
 		}
 
 
+
 		function get_decoded_latlng_list(encoded_string){
 			var count = 0
 			var poly_latlng_list = []
-			//encoded_aをdecode_polylineすると、座標リストになるので、それをpoly_latlngに格納
 			decode_polyline(encoded_string).forEach(element => {
 				element.lat = element.latitude
 				element.lng = element.longitude
@@ -261,7 +281,6 @@
 				lat += dlat;
 				shift = 0;
 				result = 0;
-
 				do {
 					b = encoded.charCodeAt(index++) - 63;
 					result = result | ((b & 0x1f) << shift);
@@ -276,7 +295,6 @@
 				};
 				poly.push(p);
 			}
-
 			return poly;
 		}
 
