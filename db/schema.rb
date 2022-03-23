@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_19_034635) do
+ActiveRecord::Schema.define(version: 2022_03_23_022022) do
 
   create_table "distances", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.date "walking_day"
@@ -39,12 +39,6 @@ ActiveRecord::Schema.define(version: 2022_03_19_034635) do
     t.integer "route_id"
     t.integer "distance_value"
     t.text "polyline_points"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "tests", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
-    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -149,10 +149,11 @@
 			draw_polylines(imap, unreached_list, "#000000", 0.4, 4)
 
 		}
+		
 
 		function get_user_distance(access_token, responsejson){
 			var user_distance = 0
-			var userJSON
+			var raw_devicesJSON
 			var request = new XMLHttpRequest();
 			const start = new Date('2000/1/1 0:00:00').getTime()
 			const end = new Date().getTime()
@@ -160,14 +161,14 @@
 			responsejson.dataSource.forEach(element => {
 				
 				if (element.dataStreamId.substr(0,3) == 'raw'){
-					// 端末はrawとコピーしたものがある
+					// 端末はrawとderived(重複多数)がある
 					request_url ='https://www.googleapis.com/fitness/v1/users/me/dataSources/' + element.dataStreamId + '/datasets/'+start.toString()+'000000'+'-'+end.toString()+'000000?access_token=' + access_token
 					request.open('GET', request_url, false);
 					request.send(null);
 					
-					if (request.status === 200) {userJSON = JSON.parse(request.responseText)}
+					if (request.status === 200) {raw_devicesJSON = JSON.parse(request.responseText)}
 					
-					userJSON.point.forEach(dis => {
+					raw_devicesJSON.point.forEach(dis => {
 						key_name = Object.keys(dis.value[0])
 						if (key_name[0] == "intVal"){
 							user_distance += dis.value[0].intVal
