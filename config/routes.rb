@@ -11,6 +11,8 @@ Rails.application.routes.draw do
 
   # resources :sessions, only: %i[create destroy]
   get 'map', to: 'map#show'
+  get 'privacypolicy' => 'home#privacy_policy'
+  get 'termsofservice' => 'home#terms_of_service'
   post 'distances' => 'distances#create'
   post 'route' => 'route#create'
   post 'steps' => 'steps#create'
