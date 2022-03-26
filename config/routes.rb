@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   # get 'log_out', to: 'sessions#destroy', as: 'log_out'
 
   # resources :sessions, only: %i[create destroy]
+  get 'top' => 'home#top'
   get 'map', to: 'map#show'
   get 'privacypolicy' => 'home#privacy_policy'
   get 'termsofservice' => 'home#terms_of_service'

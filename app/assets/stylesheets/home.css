@@ -1,61 +1,134 @@
-/* No CSS *//*# sourceMappingURL=home.css.map */
-@import url('https://fonts.googleapis.com/css?family=Sawarabi+Mincho');
 body {
+  font-family: "Avenir Next";
+  padding: 0;
   margin: 0;
-  font-family: "Hiragino Kaku Gothic ProN";
 }
 
-header {
-  height: 40px;
-  width: 100%;
-  background-color: rgba(21,20,32,0.5);
-  position: fixed;
-  top: 0;
-  z-index: 10;
+li{
+  list-style: none;
+}
+
+.header{
+  background-color: #ffffff;
+  /* height: 90px; */
+  height: 8.2rem;
+}
+
+.header a{
+  color: #000000;
 }
 
 .logo{
-  height: 40px;
-  cursor: pointer;
-  padding: 0 15px;
+  height: 100px;
+}
+
+.header-logo{
+  font-size: 40px;
+  float: left;
+  padding: 7px;
+}
+
+
+.main .img-container{
+  background-color: #CCFFFF;
+  height: 600px;
+  position: relative;
+}
+
+.phone{
+  height: 550px;
+  margin: auto;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.main{
+  background-color: #FFFFFF;
+  height: 1850px;
+}
+
+.copy-container{
+  text-align: center;
+  display: block;
+  width: 80%;
+  height: 300px;
+  margin:auto;
+}
+
+.copy-container h2{
+
+}
+
+.copy-container h3{
+  text-align: left;
+  display: inline-block;
+}
+
+.motivation-container{
+  text-align: center;
+  display: block;
+  height: 900px;
+  margin:auto;
+}
+
+.img-container2{
+  background-color: #CCFFFF;
+  height: 720px;
+  width: 100%;
+  position: relative;
+}
+
+.motivation-inner{
+  position: absolute;          /* 位置指定 */
+  padding: 0px;               /* 余白指定 */
+  top:  0;                     /* 位置指定 */
+  bottom:  0;                  /* 位置指定 */
+  left:  0;                    /* 位置指定 */
+  right:  0;                   /* 位置指定 */
+  margin-top: 50px;
+  margin-bottom: 50px;
+  margin-right: auto;
+  margin-left: auto;
+  width: 800px;               /* 幅指定 */
+  height: 400px;                /* 高さ指定 */
+}
+
+
+.before{
+}
+
+.after{
+  
+}
+
+.people-img{
+  height: 200px;
+}
+
+
+.footer{
+  background-color: #194C61;
+  height: 120px;
+  color:#FFFFFF;
+  padding: 40px 40px;
+}
+
+.footer-logo{
+  font-size: 32px;
   float: left;
 }
 
+.footer-list{
+  float: right;
+}
+
+.footer-list li{
+  padding-bottom:20px;
+}
+
 a {
+  color: #FFFFFF;
   text-decoration: none;
-}
-
-h1 {
-  margin-left:10px;
-  color: #fdfeff;
-  font-family: 'Sawarabi Mincho', sans-serif;
-}
-
-h2, h3, h4, h5, h6, p {
-  margin-left:10px;
-  color: #1a0307;
-  font-family: 'Sawarabi Mincho', sans-serif;
-}
-
-.top-wrapper{
-  padding-top:180px;
-  padding-bottom:500px;
-  background-image:url(topimage.jpg);
-  color: #373b3e;
-  background-size:cover;
-}
-
-footer{
-  padding-top:180px;
-  padding-bottom:100px;
-  background-color: #e7eef8;
-  color: #373b3e;
-}
-
-.maplink {
-  font-size: 20;
-  border: solid 1px #373b3e ;
-  border : solid 1px #b3b3b3 ;
-  border-top : solid 1px #e0e0e0 ;
-  border-bottom : solid 1px #717171 ;
 }
