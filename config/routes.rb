@@ -3,7 +3,7 @@
 Rails.application.routes.draw do
   get 'terminals/index' => 'terminals#index'
   get 'user' => 'users#index'
-  root 'home#index'
+  root 'home#top'
 
   # get 'auth/:provider/callback', to: 'sessions#create'
   # get 'auth/failure', to: redirect('/')

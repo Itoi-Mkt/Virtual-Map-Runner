@@ -8,5 +8,14 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Distance.create(walking_day: '1011-11-11', walking_distance: 11_123.56)
-Distance.create(walking_day: '2022-02-22', walking_distance: 22_278.90)
+require "csv"
+
+CSV.foreach('db/seeds/csv/steps.csv', headers: true) do |row|
+  Step.create(
+    route_id: 1,
+    distance_value: row['distance_value'],
+    polyline_points: row['polyline_points'],
+    created_at: row['created_at'],
+    updated_at: row['updated_at']
+  )
+end
