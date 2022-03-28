@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class StepsController < ApplicationController
-  # skip_before_action :check_logged_in, only: :show
 
   def new
   end
