@@ -4,9 +4,8 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
-
+.DS_Store
 home copy.css
-
 show.html copy 2.erb
 show.html copy.erb
 new.yml

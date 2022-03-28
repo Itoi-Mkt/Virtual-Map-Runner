@@ -2,16 +2,10 @@
 <html lang="ja">
 <head>
 	<%= csrf_meta_tags %>
-	<title>地図歩こう</title>
+	<title>VMRunner</title>
 
-	<%= stylesheet_link_tag "map", media: "all" %>
-
-	<style type="text/css">
-		v\:* {behavior:url(#default#VML);}
-		html, body {width: 100%; height: 100%}
-		body {margin-top: 0px; margin-right: 0px; margin-left: 0px; margin-bottom: 0px}
-	</style>
-
+	<%# stylesheet_link_tag "map", media: "all" %>
+  <link rel="stylesheet" href="assets/map.css">
 	<script src="https://apis.google.com/js/client.js"></script>
 
 	<div id="gmap" class="gmap" style="width: 100%; height: 100%;"></div>
@@ -19,6 +13,8 @@
 	<script src="https://www.gstatic.com/external_hosted/jquery2.min.js"></script>
 
 	<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['API_KEY']%>&callback=initMap" async defer></script>
+
+
 
 </head>
 <body>
@@ -135,7 +131,8 @@
 
 
 		function callback(e) {
-			var request = new XMLHttpRequest();
+                        console.log("callback")    
+                        var request = new XMLHttpRequest();
 			var devicesJSON
 			var distance
 			var jason
@@ -152,12 +149,12 @@
 			draw_reached_polylines(imap, reached_list, "#0000FF", 0.7, 8)
 			draw_unreached_polylines(imap, unreached_list, "#000000", 0.4, 4)
 			change_map_center(43.6850804,142.7975314)
-
+                        console.log("all end")
 		}
 		
 
-		function get_user_distance(access_token, responsejson){
-			var user_distance = 0
+		function get_user_distance(access_token, responsejson){    
+                        var user_distance = 0
 			var raw_devicesJSON
 			var request = new XMLHttpRequest();
 			const start = new Date('2000/1/1 0:00:00').getTime()
@@ -182,7 +179,8 @@
 						}
 					})
 				}
-			})
+                        })
+                        console.log(user_distance)
 			return user_distance
 		}
 
@@ -192,7 +190,8 @@
 			var request = new XMLHttpRequest();
 			request.open('GET', '/steps.json', false);
 			request.send(null);
-			if (request.status === 200) {stepsJSON = JSON.parse(request.responseText)}
+                        if (request.status === 200) {stepsJSON = JSON.parse(request.responseText)}
+                        console.log("get_steps end")
 			return stepsJSON
 		}
 
@@ -212,7 +211,8 @@
 			})
 			devided_list.push(reached_list)
 			devided_list.push(unreached_list)
-			return devided_list
+                        console.log("devide_stepsJSON end")    
+                        return devided_list
 		}
 
 
