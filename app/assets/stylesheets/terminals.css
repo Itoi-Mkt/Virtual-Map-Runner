@@ -1,4 +1,3 @@
-/* posts/index ================================ */
 .posts-index-item {
   padding: 20px 30px;
   background-color: white;
@@ -37,7 +36,7 @@
   text-align: left;
 }
 
-/* posts/show ================================ */
+
 .posts-show form {
   display: inline;
 }
@@ -87,7 +86,7 @@
   font-size: 14px;
 }
 
-/* posts/new ================================ */
+
 .posts-new textarea {
   font-size: 20px;
   padding: 10px;

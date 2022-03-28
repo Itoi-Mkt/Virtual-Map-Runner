@@ -6,8 +6,6 @@ class DistancesController < ApplicationController
   end
 
   def create
-    pp 'distanceのcreateアクション'
-    pp params
     redirect_to root_path
   end
 end
