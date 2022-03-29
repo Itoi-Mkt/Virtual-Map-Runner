@@ -1,22 +1,16 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  get 'terminals/index' => 'terminals#index'
-  get 'user' => 'users#index'
   root 'home#top'
-
-  # get 'auth/:provider/callback', to: 'sessions#create'
-  # get 'auth/failure', to: redirect('/')
-  # get 'log_out', to: 'sessions#destroy', as: 'log_out'
-
-  # resources :sessions, only: %i[create destroy]
   get 'top' => 'home#top'
-  get 'map', to: 'map#show'
   get 'privacypolicy' => 'home#privacy_policy'
   get 'termsofservice' => 'home#terms_of_service'
+  get 'map' => 'map#show'
+  get 'steps' => 'steps#show'
+  get 'terminals/index' => 'terminals#index'
+  post 'steps' => 'steps#create'
+  get 'user' => 'users#index'
   post 'distances' => 'distances#create'
   post 'route' => 'route#create'
-  post 'steps' => 'steps#create'
   post 'paths' => 'paths#create'
-  get 'steps' => 'steps#show'
 end

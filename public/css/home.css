@@ -84,18 +84,18 @@ li{
 }
 
 .motivation-inner{
-  position: absolute;          /* 位置指定 */
-  padding: 0px;               /* 余白指定 */
-  top:  0;                     /* 位置指定 */
-  bottom:  0;                  /* 位置指定 */
-  left:  0;                    /* 位置指定 */
-  right:  0;                   /* 位置指定 */
+  position: absolute;
+  padding: 0px;
+  top:  0;
+  bottom:  0;
+  left:  0;
+  right:  0;
   margin-top: 50px;
   margin-bottom: 50px;
   margin-right: auto;
   margin-left: auto;
-  width: 800px;               /* 幅指定 */
-  height: 400px;                /* 高さ指定 */
+  width: 800px;
+  height: 400px;
 }
 
 

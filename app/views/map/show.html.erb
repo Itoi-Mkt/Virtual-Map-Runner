@@ -27,7 +27,7 @@
       </div>
       <div class="mappanels">
         <div class="mappanel">
-          <div class="mappanel-icon" id="zoom_out">
+          <div class="mappanel-icon" id="zoom_in">
             <img src= 'images/zoom_in.png' id='zoom_in'>
           </div>
           <p class="panel-contents"></p>
@@ -110,7 +110,7 @@
     }
     
     function get_user_distance(access_token, responsejson){    
-                        var user_distance = 0
+      var user_distance = 0
       var raw_devicesJSON
       var request = new XMLHttpRequest();
       const start = new Date('2000/1/1 0:00:00').getTime()
@@ -138,7 +138,6 @@
       })
       return user_distance
     }
-
 
     function get_steps(){
       var stepsJSON
@@ -249,4 +248,5 @@
   </script>
 
 </body>
+
 </html>

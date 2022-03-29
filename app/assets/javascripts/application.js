@@ -15,5 +15,5 @@
 //= require turbolinks
 //= require_tree .
 function callman(){
-    console.log("yobidasi")
+  console.log("callman")
 }

@@ -7,14 +7,11 @@ ruby '2.6.9'
 
 gem 'devise'
 gem 'dotenv-rails'
-gem 'gon'
 gem 'google_maps_service'
 gem 'google-oauth2-installed'
 gem 'omniauth'
-gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-rails_csrf_protection'
-gem 'pry-rails'
 gem 'unicorn'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -64,7 +61,7 @@ group :development do
   gem 'binding_of_caller'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-
+  gem 'pry-rails'
   gem 'rubocop', require: false
 end
 
