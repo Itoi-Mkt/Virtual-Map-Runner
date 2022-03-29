@@ -14,6 +14,3 @@
 //= require activestorage
 //= require turbolinks
 //= require_tree .
-function callman(){
-  console.log("callman")
-}
