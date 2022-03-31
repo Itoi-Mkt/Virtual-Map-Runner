@@ -31,13 +31,6 @@ li{
   padding: 7px;
 }
 
-
-.main .img-container{
-  background-color: #CCFFFF;
-  height: 600px;
-  position: relative;
-}
-
 .phone{
   height: 550px;
   margin: auto;
@@ -49,19 +42,30 @@ li{
 
 .main{
   background-color: #FFFFFF;
-  height: 1850px;
+  height: auto;
+  text-align:center;
+  margin-bottom: 100px;
+}
+
+.phone-container{
+  background-color: #CCFFFF;
+  height: 600px;
+  position: relative;
+  width: 100%;
 }
 
 .copy-container{
   text-align: center;
   display: block;
-  width: 80%;
-  height: 300px;
-  margin:auto;
-}
-
-.copy-container h2{
-
+  width: 100%;
+  height: auto;
+  padding: 0px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  margin-right: auto;
+  margin-left: auto;
+  width: 100%;
+  height: auto;
 }
 
 .copy-container h3{
@@ -74,6 +78,7 @@ li{
   display: block;
   height: 900px;
   margin:auto;
+  width: 100%;
 }
 
 .img-container2{
@@ -94,22 +99,53 @@ li{
   margin-bottom: 50px;
   margin-right: auto;
   margin-left: auto;
-  width: 800px;
-  height: 400px;
+  width: 100%;
+  height: auto;
 }
 
-
 .before{
+  width: 100%;
 }
 
 .after{
-  
+  width: 100%;
 }
 
 .people-img{
   height: 200px;
 }
 
+.btn-wrapper{
+  margin-top:2px;
+  margin-bottom:2px;
+}
+
+.btn{
+  padding:8px 24px;
+  color: #000000;
+  display:inline-block;
+  border-radius:8px;
+}
+
+.btn:hover{
+  background-color:#C0F0F0;
+}
+
+.btn:active{
+  position:relative;
+  top: 8px;
+  box-shadow: none;
+}
+
+.start{
+  background-color:#CCFFFF;
+  box-shadow: 0 8px #66AAAA;
+  border: 1px solid #C6EAEA;
+}
+
+.start h1{
+  margin-bottom: 10px;
+}
 
 .footer{
   background-color: #194C61;
