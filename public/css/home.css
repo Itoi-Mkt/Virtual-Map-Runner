@@ -7,13 +7,25 @@ body {
   margin: 0;
 }
 
+h2 {
+  font-size: 2rem;
+}
+
+p{
+  font-size: 1.5rem;
+}
+
+a {
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
 li{
   list-style: none;
 }
 
 .header{
   background-color: #ffffff;
-  /* height: 90px; */
   height: 8.2rem;
 }
 
@@ -26,7 +38,7 @@ li{
 }
 
 .header-logo{
-  font-size: 40px;
+  font-size: 3rem;
   float: left;
   padding: 7px;
 }
@@ -59,18 +71,18 @@ li{
   display: block;
   width: 100%;
   height: auto;
-  padding: 0px;
-  margin-top: 50px;
-  margin-bottom: 50px;
-  margin-right: auto;
-  margin-left: auto;
-  width: 100%;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  margin-top: 0px;
+  margin-bottom: 0px;
   height: auto;
 }
 
 .copy-container h3{
   text-align: left;
   display: inline-block;
+  font-size: 1.5rem;
+  
 }
 
 .motivation-container{
@@ -116,7 +128,7 @@ li{
 }
 
 .btn-wrapper{
-  margin-top:2px;
+  margin-top:100px;
   margin-bottom:2px;
 }
 
@@ -167,7 +179,25 @@ li{
   padding-bottom:20px;
 }
 
-a {
-  color: #FFFFFF;
-  text-decoration: none;
+.space{
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.QA-container h3{
+  padding-left: 5%;
+  padding-right: 5%;
+  width: 90%;
+  font-size: 1.17rem;
+}
+
+.QA-container h3.answer{
+  padding-top: 5px;
+  padding-bottom: 20px;
+  margin-top: 0.1rem;
+  margin-bottom: 2rem;
+}
+
+h3.question {
+  background-color: #CCFFFF;
 }

@@ -2,6 +2,7 @@
 <html lang="ja">
 <head>
   <link rel="stylesheet" href="css/map.css">
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
   <div id="gmap" class="gmap" style="width: 100%; height: 100%;"></div>
   <script src="https://www.gstatic.com/external_hosted/jquery2.min.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['API_KEY']%>&callback=initMap" async defer></script>
@@ -18,25 +19,12 @@
     </div>
   </header>
 
-  <div class="mappanel-wrapper">
-    <div class="container">
-      <div class="heading">
-      </div>
-      <div class="mappanels">
-        <div class="mappanel">
-          <div class="mappanel-icon" id="zoom_in">
-            <img src= 'images/zoom_in.png' id='zoom_in'>
-          </div>
-          <p class="panel-contents"></p>
-        </div>
-        <div class="mappanel">
-          <div class="mappanel-icon" id="zoom_out">
-            <img src= 'images/zoom_out.png' id='zoom_out'>
-          </div>
-          <p class="panel-contents"></p>
-        </div>
-      </div>
-    </div>
+  <div data-type="MapPanel">
+    <div id='zoom_in'><img src="images/zoom_in.png"><div>Zoom<br>in</div></div>
+    <div id='zoom_out'><img src="images/zoom_out.png"><div>Zoom<br>out</div></div>
+    <div id='awaji'><img src="images/awaji.png"><div>淡路島<br>ルート</div></div>
+    <div id='shikoku'><img src="images/shikoku.png"><div>四国<br>ルート</div></div>
+    <div id='japan'><img src="images/japan.png"><div>日本縦断<br>ルート</div></div>
   </div>
 
   <script src="/javascript/map.js"></script>
@@ -44,7 +32,7 @@
   <script src=https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.js></script>
   <script>
     var client_id = '<%= ENV['APLI_CLIANT_ID']%>'
-    var scope = ["https://www.googleapis.com/auth/fitness.activity.read"];
+    var scope = ["https://www.googleapis.com/auth/fitness.location.read"];
     var access_token = "";
     
     window.onload = getToken

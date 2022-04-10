@@ -19,25 +19,25 @@ function getToken(){
 }
 
 function callback(e){
-access_token = e.access_token;
+  access_token = e.access_token;
 
-$.ajax({
-  type:"GET",
-  url: "https://www.googleapis.com/fitness/v1/users/me/dataSources",
-  data: {
-    "access_token": access_token
-  },
-  success: function(devicesJSON){
-    distance = get_user_distance(access_token, devicesJSON)
-    stepsjson = get_steps()
-    reached_and_unreached_list = devide_stepsJSON(stepsjson, distance)
-    reached_list = reached_and_unreached_list[0]
-    unreached_list = reached_and_unreached_list[1]
-    draw_reached_polylines(imap, reached_list, "#0000FF", 0.7, 8)
-    draw_unreached_polylines(imap, unreached_list, "#000000", 0.4, 4)
-    change_map_center(43.6850804,142.7975314)
-  }
-});
+  $.ajax({
+    type:"GET",
+    url: "https://www.googleapis.com/fitness/v1/users/me/dataSources",
+    data: {
+      "access_token": access_token
+    },
+    success: function(devicesJSON){
+      distance = get_user_distance(access_token, devicesJSON)
+      stepsjson = get_steps()
+      reached_and_unreached_list = devide_stepsJSON(stepsjson, distance)
+      reached_list = reached_and_unreached_list[0]
+      unreached_list = reached_and_unreached_list[1]
+      draw_reached_polylines(imap, reached_list, "#0000FF", 0.7, 8)
+      draw_unreached_polylines(imap, unreached_list, "#000000", 0.4, 4)
+      change_map_center(43.6850804,142.7975314)
+    }
+  });
 }
 
 

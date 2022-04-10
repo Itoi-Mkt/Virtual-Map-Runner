@@ -1,5 +1,4 @@
 @charset "UTF-8";
-/* reset ================================ */
 
 h1, h2, h3, h4, h5, h6, p {
   margin: 0;
@@ -25,7 +24,6 @@ header {
 .header-right{
   cursor: pointer;
   float: left;
-  /* margin-left: 10px; */
 }
 
 body {
@@ -35,21 +33,39 @@ body {
   min-height: 1vh;
 }
 
-.mappanel-wrapper {
-  position: fixed;
-  /*基準を画面の左下に*/
-  bottom: 20;
-  left: 40;
-  margin: 0;
-  width: 80%;
-  pointer-events: none;
+div[data-type="MapPanel"] {
+  position: absolute;
+  display: flex;
+  bottom: 2em;
+  left: 1em;
+  right: 1em;
+  justify-content: center;
+  min-height: 1.5em;
+  min-width: 2em;
 }
 
-.mappanel {
-  float: left;
-  width: 20%;
-  opacity: 1;
-  pointer-events: all;
+div[data-type="MapPanel"] > div {
+  margin: 0.3em;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 2.5rem;
+  padding: 0.1em;
+  background-color: rgba(21,20,32,0.5);
   cursor: pointer;
 }
-/*# sourceMappingURL=map.css.map */
+
+div[data-type="MapPanel"] > div > div {
+  margin-top: 0.1em;
+  font-family: "Avenir Next", Courier, monospace;
+  text-align: center;
+  font-size: 60%;
+  color: white;
+  text-shadow: black 1px 1px 0, black -1px -1px 0, black -1px 1px 0, black 1px -1px 0, black 0px 1px 0, black -1px 0,
+black -1px 0 0, black 1px 0 0;
+}
+
+div[data-type="MapPanel"] > div > img {
+  height: 2.6em;
+  opacity: 0.7;
+}
