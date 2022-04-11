@@ -186,6 +186,12 @@ function clear_polyline(){
   })
 }
 
+document.getElementById("demo").onclick = function() {
+  var buttonUI = document.getElementById("demo");
+  var zoom = imap.getZoom();
+  user_distance = Math.random()*500000
+}
+
 document.getElementById("zoom_in").onclick = function() {
   var buttonUI = document.getElementById("zoom_in");
   var zoom = imap.getZoom();
