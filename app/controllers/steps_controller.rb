@@ -11,7 +11,7 @@ class StepsController < ApplicationController
       dis_value = element[0]
       poly_points = element[1]
       @step = Step.new(
-        route_id: 1,
+        route_id: 4,
         distance_value: dis_value,
         polyline_points: poly_points
       )
@@ -20,7 +20,8 @@ class StepsController < ApplicationController
   end
 
   def show
-    @steps = Step.all
+    r_id = params[:route_id]
+    @steps = Step.where(route_id: r_id)
     respond_to do |format|
       format.html 
       format.json { render json: @steps } 

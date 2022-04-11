@@ -1,8 +1,11 @@
+var polylist = []
+var user_distance = 0
+
 function initMap() {
   var map = new google.maps.Map(document.getElementById("gmap"), {
     mapId: "67ef94185bd51ea8",
-    zoom: 6,
-    center: new google.maps.LatLng(43.6850804,142.7975314),
+    zoom: 5,
+    center: new google.maps.LatLng(38.1335584,137.695437),
     mapTypeId: "roadmap",
     mapTypeControl: false,
     zoomControl: false,
@@ -28,21 +31,22 @@ function callback(e){
       "access_token": access_token
     },
     success: function(devicesJSON){
+      clear_polyline()
       distance = get_user_distance(access_token, devicesJSON)
-      stepsjson = get_steps()
+      stepsjson = get_steps(2)
       reached_and_unreached_list = devide_stepsJSON(stepsjson, distance)
       reached_list = reached_and_unreached_list[0]
       unreached_list = reached_and_unreached_list[1]
       draw_reached_polylines(imap, reached_list, "#0000FF", 0.7, 8)
       draw_unreached_polylines(imap, unreached_list, "#000000", 0.4, 4)
-      change_map_center(43.6850804,142.7975314)
+      change_map_center(34.409420190769815, 134.81190697518142)
+      imap.setZoom(10)
     }
   });
 }
 
 
 function get_user_distance(access_token, responsejson){    
-  var user_distance = 0
   var raw_devicesJSON
   var request = new XMLHttpRequest();
   const start = new Date('2000/1/1 0:00:00').getTime()
@@ -67,10 +71,10 @@ function get_user_distance(access_token, responsejson){
   return user_distance
 }
 
-function get_steps(){
+function get_steps(i){
   var stepsJSON
   var request = new XMLHttpRequest();
-  request.open('GET', '/steps.json', false);
+  request.open('GET', '/steps/'+ i +'.json', false);
   request.send(null);
   if (request.status === 200) {stepsJSON = JSON.parse(request.responseText)}
   return stepsJSON
@@ -105,6 +109,7 @@ function draw_reached_polylines(imap, list, color, opacity, stroke_weight){
       strokeOpacity: opacity,
       strokeWeight: stroke_weight,
     });
+    polylist.push(onePath)
     onePath.setMap(imap);
   })
 }
@@ -120,6 +125,7 @@ function draw_unreached_polylines(imap, list, color, opacity, stroke_weight){
       strokeOpacity: opacity,
       strokeWeight: stroke_weight,
     });
+    polylist.push(onePath)
     onePath.setMap(imap);
   })
 }
@@ -174,6 +180,12 @@ function change_map_center(x, y){
   imap.panTo(new google.maps.LatLng(x, y))
 }
 
+function clear_polyline(){
+  polylist.forEach( element =>{
+    element.setMap(null)
+  })
+}
+
 document.getElementById("zoom_in").onclick = function() {
   var buttonUI = document.getElementById("zoom_in");
   var zoom = imap.getZoom();
@@ -184,4 +196,49 @@ document.getElementById("zoom_out").onclick = function() {
   var buttonUI = document.getElementById("zoom_out");
   var zoom = imap.getZoom();
   imap.setZoom(zoom - 1);
+}
+
+document.getElementById("awaji").onclick = function() {
+  var buttonUI = document.getElementById("awaji");
+  var zoom = imap.getZoom();
+  clear_polyline()
+  change_map_center(34.409420190769815, 134.81190697518142)
+  imap.setZoom(10)
+  distance = user_distance
+  stepsjson = get_steps(2)
+  reached_and_unreached_list = devide_stepsJSON(stepsjson, distance)
+  reached_list = reached_and_unreached_list[0]
+  unreached_list = reached_and_unreached_list[1]
+  draw_reached_polylines(imap, reached_list, "#0000FF", 0.7, 8)
+  draw_unreached_polylines(imap, unreached_list, "#000000", 0.4, 4)
+}
+
+document.getElementById("shikoku").onclick = function() {
+  var buttonUI = document.getElementById("shikoku");
+  var zoom = imap.getZoom();
+  clear_polyline()
+  change_map_center(33.73356985203722, 133.54433908082672)
+  imap.setZoom(7)
+  distance = user_distance
+  stepsjson = get_steps(3)
+  reached_and_unreached_list = devide_stepsJSON(stepsjson, distance)
+  reached_list = reached_and_unreached_list[0]
+  unreached_list = reached_and_unreached_list[1]
+  draw_reached_polylines(imap, reached_list, "#0000FF", 0.7, 8)
+  draw_unreached_polylines(imap, unreached_list, "#000000", 0.4, 4)
+}
+
+document.getElementById("japan").onclick = function() {
+  var buttonUI = document.getElementById("shikoku");
+  var zoom = imap.getZoom();
+  clear_polyline()
+  change_map_center(38.1335584,137.695437)
+  imap.setZoom(5)
+  distance = user_distance
+  stepsjson = get_steps(1)
+  reached_and_unreached_list = devide_stepsJSON(stepsjson, distance)
+  reached_list = reached_and_unreached_list[0]
+  unreached_list = reached_and_unreached_list[1]
+  draw_reached_polylines(imap, reached_list, "#0000FF", 0.7, 8)
+  draw_unreached_polylines(imap, unreached_list, "#000000", 0.4, 4)
 }
