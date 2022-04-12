@@ -1,5 +1,7 @@
 var polylist = []
 var user_distance = 0
+var selNumA = 3
+var selNumB = 2
 
 function initMap() {
   var map = new google.maps.Map(document.getElementById("gmap"), {
@@ -22,6 +24,7 @@ function getToken(){
 }
 
 function callback(e){
+  console.log(e)
   access_token = e.access_token;
 
   $.ajax({
@@ -186,6 +189,28 @@ function clear_polyline(){
   })
 }
 
+document.getElementById("demo").onclick = function() {
+  var buttonUI = document.getElementById("demo");
+  var zoom = imap.getZoom();
+
+  var tempNum = 0
+  user_distance = Math.random()*500000
+  setAwaji()
+  if (selNumA==1 || selNumA==3){
+    selNumB = selNumA
+    selNumA = 2
+    setShikoku()
+  }else if (selNumB==1){
+    selNumA = 3
+    selNumB = 2
+    setJapan()
+  }else{
+    selNumA = 1
+    selNumB = 2
+    setAwaji();
+  }
+}
+
 document.getElementById("zoom_in").onclick = function() {
   var buttonUI = document.getElementById("zoom_in");
   var zoom = imap.getZoom();
@@ -201,6 +226,22 @@ document.getElementById("zoom_out").onclick = function() {
 document.getElementById("awaji").onclick = function() {
   var buttonUI = document.getElementById("awaji");
   var zoom = imap.getZoom();
+  setAwaji();
+}
+
+document.getElementById("shikoku").onclick = function() {
+  var buttonUI = document.getElementById("shikoku");
+  var zoom = imap.getZoom();
+  setShikoku();
+}
+
+document.getElementById("japan").onclick = function() {
+  var buttonUI = document.getElementById("shikoku");
+  var zoom = imap.getZoom();
+  setJapan();
+}
+
+function setAwaji(){
   clear_polyline()
   change_map_center(34.409420190769815, 134.81190697518142)
   imap.setZoom(10)
@@ -213,9 +254,7 @@ document.getElementById("awaji").onclick = function() {
   draw_unreached_polylines(imap, unreached_list, "#000000", 0.4, 4)
 }
 
-document.getElementById("shikoku").onclick = function() {
-  var buttonUI = document.getElementById("shikoku");
-  var zoom = imap.getZoom();
+function setShikoku(){
   clear_polyline()
   change_map_center(33.73356985203722, 133.54433908082672)
   imap.setZoom(7)
@@ -228,9 +267,7 @@ document.getElementById("shikoku").onclick = function() {
   draw_unreached_polylines(imap, unreached_list, "#000000", 0.4, 4)
 }
 
-document.getElementById("japan").onclick = function() {
-  var buttonUI = document.getElementById("shikoku");
-  var zoom = imap.getZoom();
+function setJapan(){
   clear_polyline()
   change_map_center(38.1335584,137.695437)
   imap.setZoom(5)
