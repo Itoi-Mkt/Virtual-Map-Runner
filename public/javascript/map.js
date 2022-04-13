@@ -2,6 +2,8 @@ var polylist = []
 var user_distance = 0
 var selNumA = 3
 var selNumB = 2
+var current_lat = 35.01
+var current_lng = 135.01
 
 function initMap() {
   var map = new google.maps.Map(document.getElementById("gmap"), {
@@ -24,7 +26,6 @@ function getToken(){
 }
 
 function callback(e){
-  console.log(e)
   access_token = e.access_token;
 
   $.ajax({
@@ -102,9 +103,8 @@ function devide_stepsJSON(step_JSON, user_distance){
 }
 
 function draw_reached_polylines(imap, list, color, opacity, stroke_weight){
-  list.forEach( element =>{
-    var time_count = 1
-    var decoded_list = get_decoded_latlng_list(element.polyline_points)
+  list.forEach( string_element =>{
+    var decoded_list = get_decoded_latlng_list(string_element.polyline_points)
     const onePath = new google.maps.Polyline({
       path: decoded_list,
       geodesic: true,
@@ -115,11 +115,19 @@ function draw_reached_polylines(imap, list, color, opacity, stroke_weight){
     polylist.push(onePath)
     onePath.setMap(imap);
   })
+  
+  var p1 = new google.maps.LatLng((decode_polyline(list.slice(-1)[0].polyline_points)).slice(-1)[0].latitude,
+                                  (decode_polyline(list.slice(-1)[0].polyline_points)).slice(-1)[0].longitude)
+  var p2 = new google.maps.LatLng((decode_polyline(list.slice(-2)[0].polyline_points)).slice(-1)[0].latitude,
+                                  (decode_polyline(list.slice(-2)[0].polyline_points)).slice(-1)[0].longitude)
+  var angle = google.maps.geometry.spherical.computeHeading(p1, p2);
+  put_current_loc_marker((decode_polyline(list.slice(-1)[0].polyline_points)).slice(-1)[0].latitude,
+                         (decode_polyline(list.slice(-1)[0].polyline_points)).slice(-1)[0].longitude,
+                         angle)
 }
 
 function draw_unreached_polylines(imap, list, color, opacity, stroke_weight){
   list.forEach( element =>{
-    var time_count = 1
     var decoded_list = get_decoded_latlng_list(element.polyline_points)
     const onePath = new google.maps.Polyline({
       path: decoded_list,
@@ -252,6 +260,7 @@ function setAwaji(){
   unreached_list = reached_and_unreached_list[1]
   draw_reached_polylines(imap, reached_list, "#0000FF", 0.7, 8)
   draw_unreached_polylines(imap, unreached_list, "#000000", 0.4, 4)
+  put_start_marker(34.60275,135.00774)
 }
 
 function setShikoku(){
@@ -265,6 +274,7 @@ function setShikoku(){
   unreached_list = reached_and_unreached_list[1]
   draw_reached_polylines(imap, reached_list, "#0000FF", 0.7, 8)
   draw_unreached_polylines(imap, unreached_list, "#000000", 0.4, 4)
+  put_start_marker(34.18944,134.60962)
 }
 
 function setJapan(){
@@ -278,4 +288,34 @@ function setJapan(){
   unreached_list = reached_and_unreached_list[1]
   draw_reached_polylines(imap, reached_list, "#0000FF", 0.7, 8)
   draw_unreached_polylines(imap, unreached_list, "#000000", 0.4, 4)
+  put_start_marker(45.44644, 141.64671)
+}
+
+function put_current_loc_marker(lat, lng, rat){
+  if (rat>0){img_src = 'images/current_p_r.png'}
+  else {img_src = 'images/current_p.png'}
+  var markerOptions = {
+    map: imap,
+    position: {lat: lat, lng: lng},
+    icon: {
+      url: img_src,
+      scaledSize: new google.maps.Size(40, 40)
+    },
+  };
+  var marker = new google.maps.Marker(markerOptions);
+  polylist.push(marker)
+}
+
+function put_start_marker(lat, lng){
+  var markerOptions = {
+    map: imap,
+    position: {lat: lat, lng: lng},
+    animation: google.maps.Animation.DROP,
+    icon: {
+      url: 'images/start_flag.png',
+      scaledSize: new google.maps.Size(40, 40)
+    },
+  };
+  var marker = new google.maps.Marker(markerOptions);
+  polylist.push(marker)
 }
