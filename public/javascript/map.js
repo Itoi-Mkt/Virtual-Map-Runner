@@ -73,6 +73,7 @@ function get_user_distance(access_token, responsejson){
       })
     }
   })
+  reload_dis_disp()
   return user_distance
 }
 
