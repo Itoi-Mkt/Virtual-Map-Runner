@@ -4,6 +4,7 @@ var selNumA = 3
 var selNumB = 2
 var current_lat = 35.01
 var current_lng = 135.01
+var container = document.createElement('test');
 
 function initMap() {
   var map = new google.maps.Map(document.getElementById("gmap"), {
@@ -203,6 +204,7 @@ document.getElementById("demo").onclick = function() {
 
   var tempNum = 0
   user_distance = Math.random()*500000
+  
   setAwaji()
   if (selNumA==1 || selNumA==3){
     selNumB = selNumA
@@ -217,6 +219,8 @@ document.getElementById("demo").onclick = function() {
     selNumB = 2
     setAwaji();
   }
+
+  reload_dis_disp()
 }
 
 document.getElementById("zoom_in").onclick = function() {
@@ -318,4 +322,9 @@ function put_start_marker(lat, lng){
   };
   var marker = new google.maps.Marker(markerOptions);
   polylist.push(marker)
+}
+
+function reload_dis_disp() {
+  var message = "移動距離は "+Math.round(user_distance/1000) + " km"
+  document.getElementById("distance").innerText = message;
 }
