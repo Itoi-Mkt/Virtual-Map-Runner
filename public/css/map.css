@@ -70,9 +70,6 @@ div[data-type="MapPanel"] > div > img {
   opacity: 0.7;
 }
 
-
-
-
 div[data-type="DisPanel"] {
   position: absolute;
   display: flex;
