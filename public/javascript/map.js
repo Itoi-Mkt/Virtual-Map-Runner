@@ -45,6 +45,7 @@ function callback(e){
       draw_reached_polylines(imap, reached_list, "#0000FF", 0.7, 8)
       draw_unreached_polylines(imap, unreached_list, "#000000", 0.4, 4)
       change_map_center(34.409420190769815, 134.81190697518142)
+      put_start_marker(34.60275,135.00774)
       imap.setZoom(10)
     }
   });
