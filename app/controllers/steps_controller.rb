@@ -6,17 +6,6 @@ class StepsController < ApplicationController
   end
 
   def create
-    dis = params.require(:distance)
-    dis.each do |element|
-      dis_value = element[0]
-      poly_points = element[1]
-      @step = Step.new(
-        route_id: 4,
-        distance_value: dis_value,
-        polyline_points: poly_points
-      )
-      # @step.save
-    end
   end
 
   def show
