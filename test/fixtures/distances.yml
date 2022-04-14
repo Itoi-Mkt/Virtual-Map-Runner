@@ -1,9 +1,0 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  walking_day: 
-  walking_distance: 9.99
-
-two:
-  walking_day: 
-  walking_distance: 9.99
