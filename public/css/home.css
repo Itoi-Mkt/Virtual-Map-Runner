@@ -75,7 +75,6 @@ li{
   padding-bottom: 50px;
   margin-top: 0px;
   margin-bottom: 0px;
-  height: auto;
 }
 
 .copy-container h3{
@@ -129,7 +128,7 @@ li{
 
 .btn-wrapper{
   margin-top:100px;
-  margin-bottom:2px;
+  margin-bottom:100px;
 }
 
 .btn{

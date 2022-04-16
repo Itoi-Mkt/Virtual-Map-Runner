@@ -7,4 +7,5 @@ Rails.application.routes.draw do
   get 'termsofservice' => 'home#terms_of_service'
   get 'map' => 'map#show'
   get 'steps/:route_id' => 'steps#show'
+  get '*path' => 'home#redirect'
 end
