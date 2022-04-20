@@ -139,7 +139,7 @@ li{
 }
 
 .btn:hover{
-  background-color:#C0F0F0;
+  background-color:#F0C0C0;
 }
 
 .btn:active{
@@ -149,9 +149,9 @@ li{
 }
 
 .start{
-  background-color:#CCFFFF;
-  box-shadow: 0 8px #66AAAA;
-  border: 1px solid #C6EAEA;
+  background-color:#FFCCCC;
+  box-shadow: 0 8px #AA6666;
+  border: 1px solid #EAC6C6;
 }
 
 .start h1{
