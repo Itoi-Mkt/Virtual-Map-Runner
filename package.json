@@ -1,5 +1,29 @@
 {
   "name": "virtual-map-walker",
   "private": true,
-  "dependencies": {}
+  "description": "トップイメージ画像 <!-- ![guest_login](https://user-images.githubusercontent.com/57904570/128120894-8cb3de67-6f5e-4175-965e-0222509c0f32.png) -->",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "devDependencies": {
+    "eslint": "^8.13.0",
+    "eslint-config-google": "^0.14.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Itoi-Mkt/Virtual-Map-Walker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Itoi-Mkt/Virtual-Map-Walker/issues"
+  },
+  "homepage": "https://github.com/Itoi-Mkt/Virtual-Map-Walker#readme"
 }
