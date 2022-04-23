@@ -207,21 +207,7 @@ document.getElementById("demo").onclick = function() {
   var tempNum = 0
   user_distance = Math.random()*500000
   
-  setAwaji()
-  if (selNumA==1 || selNumA==3){
-    selNumB = selNumA
-    selNumA = 2
-    setShikoku()
-  }else if (selNumB==1){
-    selNumA = 3
-    selNumB = 2
-    setJapan()
-  }else{
-    selNumA = 1
-    selNumB = 2
-    setAwaji();
-  }
-
+  setShikoku()
   reload_dis_disp()
 }
 
